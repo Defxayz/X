@@ -1,80 +1,92 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Проект X</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ПРОЕКТ X</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #0d0d0d;
-      color: white;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #0f0f0f);
+      color: #ffffff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       min-height: 100vh;
       text-align: center;
+      padding: 20px;
     }
 
-    .logo {
-      font-size: 3em;
-      font-weight: bold;
-      color: #00FFFF;
+    h1 {
+      font-size: 2.5em;
+      color: #ffffff;
+      margin-bottom: 0.3em;
     }
 
-    .title {
-      font-size: 1.8em;
-      margin: 20px 0;
+    p {
+      font-size: 1.2em;
+      color: #b0b0b0;
+      margin-bottom: 2em;
     }
 
-    .btn {
-      display: block;
-      margin: 10px;
-      padding: 15px 30px;
-      font-size: 1em;
+    .button {
+      background-color: #00ffe5;
+      color: #000;
       border: none;
+      padding: 14px 28px;
+      margin: 10px;
+      font-size: 1em;
+      font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn-start {
-      background-color: #00FFFF;
-      color: #000;
-    }
-
-    .btn-start:hover {
-      background-color: #00dddd;
-    }
-
-    .btn-tg {
-      background-color: transparent;
-      border: 2px solid #00FFFF;
-      color: #00FFFF;
-    }
-
-    .btn-tg:hover {
-      background-color: #00ffff11;
-    }
-
-    a {
+      transition: 0.3s ease;
       text-decoration: none;
+      display: inline-block;
+    }
+
+    .button:hover {
+      background-color: #00bfa8;
+      transform: scale(1.05);
+    }
+
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #00ffe5;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2em;
+      }
+
+      p {
+        font-size: 1em;
+      }
+
+      .button {
+        width: 90%;
+        font-size: 1em;
+      }
+
+      .header {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="logo">X</div>
-  <div class="title">Добро пожаловать в мир заработка</div>
+  <div class="header">ПРОЕКТ X</div>
 
-  <a href="#start">
-    <button class="btn btn-start">НАЧАТЬ</button>
-  </a>
+  <h1>Добро пожаловать в мир заработка</h1>
+  <p>Платформа, где возможности встречаются с реальностью</p>
 
-  <a href="https://t.me/Caspebet" target="_blank">
-    <button class="btn btn-tg">Написать в Telegram</button>
-  </a>
+  <a href="#" class="button">НАЧАТЬ</a>
+  <a href="https://t.me/Caspebet" target="_blank" class="button">НАПИСАТЬ В TELEGRAM</a>
 </body>
 </html>
