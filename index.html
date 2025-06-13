@@ -1,0 +1,173 @@
+Defer, [14.06.2025 00:26]
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ПРОЕКТ X</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a, #121212);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .header {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 1.4em;
+      color: #00ffe5;
+      text-shadow: 0 0 15px #00ffe5;
+      letter-spacing: 2px;
+    }
+
+    .container {
+      margin-top: 140px;
+      text-align: center;
+      padding: 20px;
+      animation: fadeIn 1s ease;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      color: #ffffff;
+      margin-bottom: 0.4em;
+      text-shadow: 0 0 10px #00ffe5;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #b0b0b0;
+      margin-bottom: 2.5em;
+    }
+
+    .button, .fancy-button {
+      background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+      border: 1px solid #00ffe5;
+      color: #00ffe5;
+      padding: 14px 24px;
+      margin: 12px;
+      font-size: 1em;
+      font-weight: bold;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 229, 0.15);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .button:hover, .fancy-button:hover {
+      background: #00ffe5;
+      color: #000;
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 20px rgba(0, 255, 229, 0.5);
+    }
+
+    #menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 60px;
+      animation: fadeIn 1s ease;
+    }
+
+    .faq-box {
+      max-width: 700px;
+      background: #111;
+      border: 1px solid #00ffe5;
+      padding: 24px;
+      margin-top: 30px;
+      border-radius: 16px;
+      text-align: left;
+      box-shadow: 0 0 30px rgba(0, 255, 229, 0.1);
+      animation: fadeIn 0.5s ease;
+    }
+
+    .faq-box h2 {
+      color: #00ffe5;
+      margin-bottom: 14px;
+      font-size: 1.6em;
+    }
+
+    .faq-box p {
+      color: #ccc;
+      font-size: 1.05em;
+      line-height: 1.7;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      p { font-size: 1em; }
+      .button, .fancy-button { width: 90%; font-size: 1em; }
+      .header { font-size: 1.1em; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">ПРОЕКТ X</div>
+
+  <div class="container" id="main-screen">
+    <h1>Добро пожаловать в мир заработка</h1>
+    <p>Твоя новая реальность начинается здесь</p>
+    <button class="button" onclick="showMenu()">🚀 НАЧАТЬ</button>
+    <a href="https://t.me/Caspebet" target="_blank" class="button">💬 НАПИСАТЬ В TELEGRAM</a>
+  </div>
+
+  <div id="menu">
+    <button class="fancy-button" onclick="showFAQ()">📘 ПРОЕКТ X (FAQ)</button>
+    <button class="fancy-button">📖 МАНУАЛЫ</button>
+    <button class="fancy-button">🧑‍🏫 КУРАТОРЫ</button>
+    <button class="fancy-button">💼 ВОРКИ</button>
+    <button class="fancy-button">🛡️ АНОНИМНОСТЬ</button>
+
+    <div class="faq-box" id="faq" style="display: none;">
+      <h2>О ПРОЕКТЕ X</h2>
+      <p>
+        Проект X — это твой вход в закрытый мир реальных тем заработка.  
+        У нас нет воды, только суть: актуальные схемы, проверенные ворки, опытные кураторы, детальные мануалы.  
+        Здесь ты не просто зарабатываешь — ты растешь, качаешь навыки и пробуждаешь мышление.  
+        Анонимность? Гарантирована.  
+        Это не просто платформа. Это путь. 🔥  
+        <br><br>Готов идти дальше — мы уже ждем.
+      </p>
+    </div>
+  </div>
+
+  <script>
+
+Defer, [14.06.2025 00:26]
+function showMenu() {
+      document.getElementById('main-screen').style.display = 'none';
+      document.getElementById('menu').style.display = 'flex';
+    }
+
+    function showFAQ() {
+      const faq = document.getElementById('faq');
+      faq.style.display = faq.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
