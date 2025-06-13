@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ПРОЕКТ X</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #000000, #0f0f0f);
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #00ffe5;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 100px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ffffff;
+      margin-bottom: 0.3em;
+    }
+
+    p {
+      font-size: 1.2em;
+      color: #b0b0b0;
+      margin-bottom: 2em;
+    }
+
+    .button {
+      background-color: #00ffe5;
+      color: #000;
+      border: none;
+      padding: 14px 28px;
+      margin: 10px;
+      font-size: 1em;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .button:hover {
+      background-color: #00bfa8;
+      transform: scale(1.05);
+    }
+
+    #menu {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 60px;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .faq-box {
+      max-width: 700px;
+      background: #111;
+      border: 1px solid #00ffe5;
+      padding: 20px;
+      margin-top: 20px;
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    .faq-box h2 {
+      color: #00ffe5;
+      margin-bottom: 10px;
+    }
+
+    .faq-box p {
+      color: #ccc;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2em; }
+      p { font-size: 1em; }
+      .button { width: 90%; font-size: 1em; }
+      .header { font-size: 1em; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">ПРОЕКТ X</div>
+
+  <div class="container" id="main-screen">
+    <h1>Добро пожаловать в мир заработка</h1>
+    <p>Платформа, где возможности встречаются с реальностью</p>
+    <button class="button" onclick="showMenu()">НАЧАТЬ</button>
+    <a href="https://t.me/Caspebet" target="_blank" class="button">НАПИСАТЬ В TELEGRAM</a>
+  </div>
+
+  <div id="menu">
+    <button class="button" onclick="showFAQ()">ПРОЕКТ X (FAQ)</button>
+    <button class="button">МАНУАЛЫ</button>
+    <button class="button">КУРАТОРЫ</button>
+    <button class="button">ВОРКИ</button>
+    <button class="button">АНОНИМНОСТЬ</button>
+
+    <div class="faq-box" id="faq" style="display: none;">
+      <h2>О ПРОЕКТЕ X</h2>
+      <p>
+        Проект X — это инновационная платформа, созданная для тех, кто хочет зарабатывать в 2025 году и дальше.
+        Здесь ты найдешь эксклюзивные темки, мануалы, поддержку кураторов и всё, что нужно для успешного старта.
+        Мы не просто даём схемы — мы создаём сообщество, где каждый может вырасти и выйти на новый уровень.
+        Всё — с заботой о твоей анонимности, безопасности и заработке. 🚀
+      </p>
+    </div>
+  </div>
+
+  <script>
+    function showMenu() {
+      document.getElementById('main-screen').style.display = 'none';
+      document.getElementById('menu').style.display = 'flex';
+    }
+
+    function showFAQ() {
+      const faq = document.getElementById('faq');
+      faq.style.display = faq.style.display === 'none' ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>
