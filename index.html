@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PROJECT X | V2</title>
+  <title>PROJECT X | FINAL</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -34,6 +34,30 @@
         radial-gradient(circle at 20% 30%, rgba(0, 221, 255, 0.15) 0%, transparent 25%),
         radial-gradient(circle at 80% 70%, rgba(144, 0, 255, 0.15) 0%, transparent 25%);
       overflow-x: hidden;
+    }
+    
+    /* Анимация перехода между страницами */
+    .page-transition {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+      z-index: 1000;
+      transition: left 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+    }
+    
+    .page-transition.active {
+      left: 0;
+    }
+    
+    .main-content {
+      transition: opacity 0.4s ease;
+    }
+    
+    .main-content.hide {
+      opacity: 0;
     }
     
     header {
@@ -150,39 +174,14 @@
       border-radius: 10px;
       cursor: pointer;
       transition: all 0.3s ease;
+      text-decoration: none;
+      color: white;
     }
     
     .manual-btn:hover {
       background: rgba(0, 221, 255, 0.1);
       border-color: var(--neon-cyan);
-    }
-    
-    .manual-btn::after {
-      content: '+';
-      font-size: 1.5rem;
-      color: var(--neon-cyan);
-      transition: transform 0.3s ease;
-    }
-    
-    .manual-btn.active::after {
-      transform: rotate(45deg);
-    }
-    
-    .manual-content {
-      max-height: 0;
-      padding: 0 1.5rem;
-      background: rgba(20, 20, 35, 0.6);
-      border-radius: 0 0 10px 10px;
-      overflow: hidden;
-      transition: max-height 0.4s ease, padding 0.4s ease;
-    }
-    
-    .manual-content.show {
-      max-height: 200px;
-      padding: 1rem 1.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid rgba(0, 221, 255, 0.1);
-      border-top: none;
+      transform: translateX(5px);
     }
     
     footer {
@@ -228,79 +227,123 @@
   </style>
 </head>
 <body>
+  <!-- Эффект перехода -->
+  <div class="page-transition"></div>
+  
   <!-- Эффект частиц -->
   <canvas class="particles"></canvas>
   
-  <header>
-    <div class="logo">PROJECT X</div>
-    <div class="tagline">ИННОВАЦИОННЫЙ ЗАРАБОТОК</div>
-  </header>
+  <div class="main-content">
+    <header>
+      <div class="logo">PROJECT X</div>
+      <div class="tagline">ИННОВАЦИОННЫЙ ЗАРАБОТОК</div>
+    </header>
 
-  <div class="btn-container">
-    <button class="btn" onclick="showSection('menu')">
-      <i class="fas fa-rocket"></i> НАЧАТЬ
-    </button>
-    <a class="btn" href="https://t.me/Caspebet" target="_blank">
-      <i class="fab fa-telegram"></i> ТЕЛЕГРАМ
-    </a>
-  </div>
-
-  <!-- Главное меню -->
-  <div id="menu" class="section">
-    <button class="btn" onclick="showSection('faq')">
-      <i class="fas fa-question-circle"></i> FAQ
-    </button>
-    <button class="btn" onclick="showSection('manuals')">
-      <i class="fas fa-book"></i> МАНУАЛЫ
-    </button>
-    <button class="btn" onclick="showSection('curators')">
-      <i class="fas fa-users"></i> КУРАТОРЫ
-    </button>
-    <button class="btn" onclick="showSection('works')">
-      <i class="fas fa-tasks"></i> ВОРКИ
-    </button>
-    <button class="btn" onclick="showSection('anon')">
-      <i class="fas fa-user-secret"></i> АНОНИМНОСТЬ
-    </button>
-  </div>
-
-  <!-- FAQ -->
-  <div id="faq" class="section">
-    <h3 style="color: var(--neon-cyan); margin-bottom: 1rem;">ЧТО ТАКОЕ PROJECT X?</h3>
-    <p>Это инновационная платформа для заработка, объединяющая проверенные методики, экспертные мануалы и профессиональную поддержку кураторов. Мы обеспечиваем полную анонимность и эффективные инструменты для достижения финансовых результатов.</p>
-  </div>
-
-  <!-- Мануалы -->
-  <div id="manuals" class="section">
-    <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">ПРЕМИУМ МАНУАЛЫ</h3>
-    <p style="margin-bottom: 1.5rem; color: #aaa;">Стоимость обучения: <span style="color: var(--neon-cyan); font-weight: bold;">6$</span> (включены вложения)</p>
-    
-    <div class="manual-list">
-      <div class="manual-btn" onclick="toggleManual(this)">SCM ТУРКОВ <span style="color: var(--neon-cyan);">(от $1500)</span></div>
-      <div class="manual-content">Полное руководство по работе с турецкими платежными системами и обходом верификации.</div>
-      
-      <div class="manual-btn" onclick="toggleManual(this)">SCM ЗНАКОМСТВА</div>
-      <div class="manual-content">Методика заработка на международных сайтах знакомств с гарантированным доходом.</div>
-      
-      <!-- Остальные мануалы аналогично -->
+    <div class="btn-container">
+      <button class="btn" id="startBtn">
+        <i class="fas fa-rocket"></i> НАЧАТЬ
+      </button>
+      <a class="btn" href="https://t.me/Caspebet" target="_blank">
+        <i class="fab fa-telegram"></i> ТЕЛЕГРАМ
+      </a>
     </div>
-    
-    <h3 style="color: var(--neon-purple); margin: 2rem 0 1.5rem;">БЕСПЛАТНЫЕ МЕТОДЫ</h3>
-    
-    <div class="manual-btn" onclick="toggleManual(this)">СДАЧА WHATSAPP</div>
-    <div class="manual-content">Инструкция по временной аренде вашего WhatsApp аккаунта с гарантированными выплатами.</div>
-    
-    <div class="manual-btn" onclick="toggleManual(this)">TIKTOK ARBITRAGE</div>
-    <div class="manual-content">Заработок на продвижении контента через TikTok с монетизацией просмотров.</div>
+
+    <!-- Главное меню (появится после перехода) -->
+    <div id="menu" class="section">
+      <button class="btn" onclick="showSection('faq')">
+        <i class="fas fa-question-circle"></i> FAQ
+      </button>
+      <button class="btn" onclick="showSection('works')">
+        <i class="fas fa-tasks"></i> ВОРКИ
+      </button>
+      <button class="btn" onclick="showSection('curators')">
+        <i class="fas fa-users"></i> КУРАТОРЫ
+      </button>
+      <button class="btn" onclick="showSection('anon')">
+        <i class="fas fa-user-secret"></i> АНОНИМНОСТЬ
+      </button>
+    </div>
+
+    <!-- FAQ -->
+    <div id="faq" class="section">
+      <h3 style="color: var(--neon-cyan); margin-bottom: 1rem;">ЧТО ТАКОЕ PROJECT X?</h3>
+      <p>Это инновационная платформа для заработка, объединяющая проверенные методики, экспертные мануалы и профессиональную поддержку кураторов. Мы обеспечиваем полную анонимность и эффективные инструменты для достижения финансовых результатов.</p>
+    </div>
+
+    <!-- Ворки (с мануалами) -->
+    <div id="works" class="section">
+      <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">ДОСТУПНЫЕ ВОРКИ</h3>
+      <p style="margin-bottom: 1.5rem; color: #aaa;">Выберите мануал для изучения:</p>
+      
+      <div class="manual-list">
+        <a href="https://telegra.ph/Manual-po-Kripte-02-24" target="_blank" class="manual-btn">
+          <i class="fab fa-bitcoin"></i> МАНУАЛ ПО КРИПТЕ
+        </a>
+        
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+          <i class="fab fa-apple"></i> ICLOUD
+        </a>
+        
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+          <i class="fas fa-globe-europe"></i> ОБЩИЙ МАНУАЛ ЕВРОПА 2.00
+        </a>
+        
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+          <i class="fas fa-book"></i> ПОЛНЫЙ МАНУАЛ 2.00
+        </a>
+      </div>
+    </div>
+
+    <!-- Кураторы -->
+    <div id="curators" class="section">
+      <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem;">НАШИ КУРАТОРЫ</h3>
+      <a class="btn" href="https://t.me/Caspebet" target="_blank" style="margin-top: 1rem;">
+        <i class="fab fa-telegram"></i> @Caspebet
+      </a>
+      <p style="margin-top: 1.5rem; color: #aaa;">Наши кураторы помогут вам разобраться во всех вопросах и доведут до первого заработка.</p>
+    </div>
+
+    <!-- Анонимность -->
+    <div id="anon" class="section">
+      <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">АНОНИМНОСТЬ</h3>
+      <p>Мы используем передовые технологии для защиты ваших данных:</p>
+      <ul style="margin-top: 1rem; padding-left: 1.5rem;">
+        <li style="margin-bottom: 0.5rem;">Шифрование всех соединений</li>
+        <li style="margin-bottom: 0.5rem;">Отсутствие логирования</li>
+        <li style="margin-bottom: 0.5rem;">Анонимные платежи</li>
+        <li>Рекомендации по защите персональных данных</li>
+      </ul>
+    </div>
+
+    <footer>
+      <p>© PROJECT X | 2024</p>
+    </footer>
   </div>
-
-  <!-- Остальные секции (кураторы, ворки, анонимность) -->
-
-  <footer>
-    <p>© PROJECT X | 2024</p>
-  </footer>
 
   <script>
+    // Эффект перехода при нажатии на кнопку "Начать"
+    document.getElementById('startBtn').addEventListener('click', function() {
+      const transition = document.querySelector('.page-transition');
+      const mainContent = document.querySelector('.main-content');
+      
+      // Запускаем анимацию перехода
+      mainContent.classList.add('hide');
+      transition.classList.add('active');
+      
+      // После завершения анимации показываем меню
+      setTimeout(() => {
+        document.getElementById('menu').classList.add('visible');
+        transition.classList.remove('active');
+        mainContent.classList.remove('hide');
+        
+        // Плавный скролл к меню
+        window.scrollTo({
+          top: document.getElementById('menu').offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }, 600);
+    });
+    
     // Показать/скрыть секции
     function showSection(id) {
       document.querySelectorAll('.section').forEach(sec => {
@@ -311,13 +354,6 @@
         top: document.getElementById(id).offsetTop - 80,
         behavior: 'smooth'
       });
-    }
-    
-    // Раскрывающиеся мануалы
-    function toggleManual(btn) {
-      const content = btn.nextElementSibling;
-      btn.classList.toggle('active');
-      content.classList.toggle('show');
     }
     
     // Эффект частиц
