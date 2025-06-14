@@ -1,174 +1,152 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>ПРОЕКТ X</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Проект X</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
+    *{box-sizing:border-box;}
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(circle at top left, #0a0a0a, #111);
-      color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-      overflow-x: hidden;
+      margin:0; padding:0;
+      font-family:'Orbitron',sans-serif;
+      background:#0a0a0a; color:#fff;
+      overflow-x:hidden;
+    }
+    header{position:fixed;top:20px;left:20px;font-size:1.4em;color:#00ffe5;text-shadow:0 0 15px #00ffe5;z-index:100;}
+    .screen{padding:100px 20px;text-align:center;animation:fadeIn .8s;}
+    h1{font-size:2.8em; text-shadow:0 0 10px #00ffe5;margin-bottom:.5em;}
+    p.subtitle{font-size:1.2em;color:#b0b0b0;margin-bottom:2em;}
+
+    .btn {
+      background:linear-gradient(135deg,#111,#1d1d1d);
+      border:1px solid #00ffe5; color:#00ffe5;
+      padding:14px 24px; margin:12px;
+      font-size:1em;font-weight:bold;border-radius:12px;
+      cursor:pointer;transition:.3s;box-shadow:0 0 10px rgba(0,255,229,.2);
+    }
+    .btn:hover{
+      background:#00ffe5; color:#000;
+      transform:scale(1.05);
+      box-shadow:0 0 20px rgba(0,255,229,.5);
     }
 
-    .header {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      font-size: 1.4em;
-      color: #00ffe5;
-      text-shadow: 0 0 15px #00ffe5;
-      letter-spacing: 2px;
-      z-index: 100;
-    }
+    .hidden{display:none;}
+    .fade{animation:fadeIn .5s ease;}
 
-    .container {
-      margin-top: 140px;
-      text-align: center;
-      padding: 20px;
-      animation: fadeIn 1.2s ease;
+    .section {
+      max-width:800px;
+      margin:20px auto;
+      background:#121212;
+      border:1px solid #00ffe5;
+      border-radius:8px;
+      box-shadow:0 0 30px rgba(0,255,229,.1);
+      overflow:hidden;
     }
-
-    h1 {
-      font-size: 2.8em;
-      color: #ffffff;
-      margin-bottom: 0.4em;
-      text-shadow: 0 0 10px #00ffe5;
+    .section-header {
+      background:#1a1a1a;
+      cursor:pointer;
+      padding:16px 20px;
+      display:flex;align-items:center;justify-content:space-between;
     }
-
-    p {
-      font-size: 1.2em;
-      color: #b0b0b0;
-      margin-bottom: 2.5em;
+    .section-header h3 {
+      margin:0; color:#00ffe5; font-size:1.2em;
     }
-
-    .button, .fancy-button {
-      background: linear-gradient(135deg, #111, #1d1d1d);
-      border: 1px solid #00ffe5;
-      color: #00ffe5;
-      padding: 14px 24px;
-      margin: 12px;
-      font-size: 1em;
-      font-weight: bold;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 229, 0.15);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      text-decoration: none;
+    .section-header span {
+      font-size:1.4em; transform:rotate(0deg);
+      transition:transform .3s;
     }
-
-    .button:hover, .fancy-button:hover {
-      background: #00ffe5;
-      color: #000;
-      transform: scale(1.05);
-      box-shadow: 0 0 25px rgba(0, 255, 229, 0.7);
+    .section-header.active span {
+      transform:rotate(45deg);
     }
-
-    #menu {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 60px;
-      animation: fadeIn 1s ease;
+    .section-content {
+      display:none;
+      padding:0 20px 16px;
+      color:#ccc; font-size:1em; line-height:1.6;
     }
-
-    .faq-box {
-      max-width: 700px;
-      background: #121212;
-      border: 1px solid #00ffe5;
-      padding: 24px;
-      margin-top: 30px;
-      border-radius: 16px;
-      text-align: left;
-      box-shadow: 0 0 30px rgba(0, 255, 229, 0.1);
-      animation: fadeIn 0.5s ease;
-    }
-
-    .faq-box h2 {
-      color: #00ffe5;
-      margin-bottom: 14px;
-      font-size: 1.6em;
-    }
-
-    .faq-box p {
-      color: #ccc;
-      font-size: 1.05em;
-      line-height: 1.7;
+    .section-content p {
+      margin:12px 0;
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2em; }
-      p { font-size: 1em; }
-      .button, .fancy-button { width: 90%; font-size: 1em; }
-      .header { font-size: 1.1em; }
+      from{opacity:0;transform:translateY(20px);}
+      to{opacity:1;transform:translateY(0);}
     }
   </style>
 </head>
 <body>
+  <header>ПРОЕКТ X</header>
 
-  <div class="header">ПРОЕКТ X</div>
-
-  <!-- Главный экран -->
-  <div class="container" id="main-screen">
+  <!-- главный экран -->
+  <div id="screen1" class="screen">
     <h1>Добро пожаловать в мир заработка</h1>
-    <p>Твоя новая реальность начинается здесь</p>
-    <button class="button" onclick="showMenu()">🚀 НАЧАТЬ</button>
-    <a href="https://t.me/Caspebet" target="_blank" class="button">💬 НАПИСАТЬ В TELEGRAM</a>
+    <p class="subtitle">Твоя новая реальность начинается здесь</p>
+    <button class="btn" onclick="goNext()">🚀 НАЧАТЬ</button>
+    <a class="btn" href="https://t.me/Caspebet" target="_blank">💬 НАПИСАТЬ В TELEGRAM</a>
   </div>
 
-  <!-- Меню после нажатия "НАЧАТЬ" -->
-  <div id="menu">
-    <button class="fancy-button" onclick="showFAQ()">📘 ПРОЕКТ X (FAQ)</button>
-    <button class="fancy-button">📖 МАНУАЛЫ</button>
-    <button class="fancy-button">🧑‍🏫 КУРАТОРЫ</button>
-    <button class="fancy-button">💼 ВОРКИ</button>
-    <button class="fancy-button">🛡️ АНОНИМНОСТЬ</button>
-
-    <div class="faq-box" id="faq" style="display: none;">
-      <h2>О ПРОЕКТЕ X</h2>
-      <p>
-        Проект X — это твой вход в закрытый мир реального заработка.  
-        Мы даём тебе доступ к рабочим темам, схемам, гайд-сетапам, опытным кураторам и постоянной поддержке.  
-        Здесь ты не просто зарабатываешь — ты становишься умнее, свободнее и увереннее.  
-        Впереди — только вперёд.  
-        <br><br>Добро пожаловать в будущее.
-      </p></div>
+  <!-- меню -->
+  <div id="screen2" class="screen hidden">
+    <h1>Меню Проекта X</h1>
+    <div class="sections">
+      <!-- FAQ уже есть -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h3>📘 ПРОЕКТ X (FAQ)</h3><span>+</span>
+        </div>
+        <div class="section-content"><p>Проект X — это твой вход...</p></div>
+      </div>
+      <!-- МАНУАЛЫ -->
+      <div class="section">
+        <div class="section-header" onclick="toggleSection(this)">
+          <h3>📖 МАНУАЛЫ</h3><span>+</span>
+        </div>
+        <div class="section-content">
+          <p><strong>ПЛАТНЫЕ (6$):</strong></p>
+          <ul>
+            <li>SCM ТУРКОВ etc...</li>
+            <!-- full list -->
+          </ul>
+          <p><strong>БЕСПЛАТНЫЕ:</strong></p>
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+              <h3>Сдача WhatsApp</h3><span>+</span>
+            </div>
+            <div class="section-content"><p>Сдача Вацап — это...</p></div>
+          </div>
+          <div class="section">
+            <div class="section-header" onclick="toggleSection(this)">
+              <h3>TikTok</h3><span>+</span>
+            </div>
+            <div class="section-content"><p>Выкладываешь видео про Проект X...</p></div>
+          </div>
+          <!-- …другие -->
+        </div>
+      </div>
+      <!-- Кураторы -->
+      <div class="section"><div class="section-header" onclick="toggleSection(this)">
+          <h3>🧑‍💼 КУРАТОРЫ</h3><span>+</span>
+        </div>
+        <div class="section-content">
+          <p><a href="https://t.me/Caspebet" target="_blank">@Caspebet — главный куратор</a></p>
+        </div>
+      </div>
+      <!-- Заглушки -->
+      <div class="section"><div class="section-header"><h3>💼 ВОРКИ</h3><span>+</span></div><div class="section-content"><p>Скоро...</p></div></div>
+      <div class="section"><div class="section-header"><h3>🛡️ АНОНИМНОСТЬ</h3><span>+</span></div><div class="section-content"><p>Скоро...</p></div></div>
+    </div>
   </div>
 
-  <!-- Скрипт -->
   <script>
-    function showMenu() {
-      document.getElementById('main-screen').style.display = 'none';
-      document.getElementById('menu').style.display = 'flex';
+    function goNext(){
+      document.getElementById('screen1').classList.add('hidden');
+      document.getElementById('screen2').classList.remove('hidden');
     }
-
-    function showFAQ() {
-      const faq = document.getElementById('faq');
-      faq.style.display = faq.style.display === 'none' ? 'block' : 'none';
+    function toggleSection(el){
+      el.classList.toggle('active');
+      let c=el.nextElementSibling;
+      c.style.display = (c.style.display==='block'? 'none':'block');
     }
   </script>
-
 </body>
 </html>
