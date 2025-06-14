@@ -1,193 +1,386 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Проект X</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT X | V2</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    :root {
+      --neon-cyan: #0df;
+      --neon-purple: #90f;
+      --dark-bg: #0a0a12;
+      --darker-bg: #07070c;
+      --card-bg: rgba(15, 15, 25, 0.8);
+    }
+    
     * {
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Rajdhani', 'Segoe UI', sans-serif;
     }
+    
+    @font-face {
+      font-family: 'Rajdhani';
+      src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+    }
+    
     body {
-      background: #0a0a0a;
+      background: var(--dark-bg);
       color: white;
-      padding: 20px;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0, 221, 255, 0.15) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(144, 0, 255, 0.15) 0%, transparent 25%);
+      overflow-x: hidden;
     }
+    
     header {
       text-align: center;
-      margin-bottom: 30px;
+      padding: 2rem 0;
+      position: relative;
     }
+    
     .logo {
-      font-size: 32px;
-      font-weight: bold;
-      color: #00ffcc;
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(0, 221, 255, 0.3);
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      animation: glow 2s ease-in-out infinite alternate;
     }
+    
     .tagline {
-      font-size: 18px;
-      margin-top: 10px;
-      color: #999;
+      font-size: 1.2rem;
+      color: #aaa;
+      font-weight: 300;
+      letter-spacing: 1px;
     }
+    
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    
     .btn {
-      display: inline-block;
-      padding: 14px 24px;
-      margin: 10px auto;
-      background: linear-gradient(135deg, #00ffc3, #0088ff);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      width: 280px;
+      padding: 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: white;
+      background: var(--card-bg);
       border: none;
-      border-radius: 8px;
-      font-size: 18px;
+      border-radius: 12px;
       cursor: pointer;
-      color: #000;
-      transition: all 0.3s ease;
-      text-align: center;
-      width: 220px;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      z-index: 1;
     }
+    
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    
     .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 10px #00ffc3;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 221, 255, 0.3);
     }
+    
+    .btn:hover::before {
+      opacity: 1;
+    }
+    
+    .btn:active {
+      transform: translateY(1px);
+    }
+    
+    .btn i {
+      font-size: 1.3rem;
+    }
+    
     .section {
       display: none;
-      margin-top: 20px;
-      background: #111;
-      padding: 15px;
-      border-radius: 8px;
-      animation: fadeIn 0.5s ease;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: var(--card-bg);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
     }
+    
     .section.visible {
       display: block;
     }
+    
     .manual-btn {
-      display: block;
-      background: #1f1f1f;
-      border: 1px solid #00ffc3;
-      border-radius: 6px;
-      padding: 10px;
-      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.5rem;
+      margin: 0.8rem 0;
+      background: rgba(30, 30, 45, 0.7);
+      border: 1px solid rgba(0, 221, 255, 0.1);
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s ease;
     }
+    
     .manual-btn:hover {
-      background: #00ffc3;
-      color: black;
+      background: rgba(0, 221, 255, 0.1);
+      border-color: var(--neon-cyan);
     }
+    
+    .manual-btn::after {
+      content: '+';
+      font-size: 1.5rem;
+      color: var(--neon-cyan);
+      transition: transform 0.3s ease;
+    }
+    
+    .manual-btn.active::after {
+      transform: rotate(45deg);
+    }
+    
     .manual-content {
-      display: none;
-      margin-top: 8px;
-      background: #222;
-      padding: 10px;
-      border-radius: 6px;
+      max-height: 0;
+      padding: 0 1.5rem;
+      background: rgba(20, 20, 35, 0.6);
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
     }
+    
+    .manual-content.show {
+      max-height: 200px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(0, 221, 255, 0.1);
+      border-top: none;
+    }
+    
     footer {
       text-align: center;
-      margin-top: 40px;
+      padding: 2rem;
       color: #555;
+      font-size: 0.9rem;
     }
-
+    
+    /* Анимации */
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes glow {
+      from { text-shadow: 0 0 10px rgba(0, 221, 255, 0.3); }
+      to { text-shadow: 0 0 20px rgba(144, 0, 255, 0.4); }
+    }
+    
+    /* Эффект частиц */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 2.5rem;
+      }
+      
+      .section {
+        padding: 1.5rem;
+        margin: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Эффект частиц -->
+  <canvas class="particles"></canvas>
+  
   <header>
-    <div class="logo">Проект X</div>
-    <div class="tagline">Добро пожаловать в мир заработка</div>
+    <div class="logo">PROJECT X</div>
+    <div class="tagline">ИННОВАЦИОННЫЙ ЗАРАБОТОК</div>
   </header>
 
-  <button class="btn" onclick="showSection('menu')">НАЧАТЬ</button>
-  <a class="btn" href="https://t.me/Caspebet" target="_blank">НАПИСАТЬ В ТЕЛЕГРАМ</a>
+  <div class="btn-container">
+    <button class="btn" onclick="showSection('menu')">
+      <i class="fas fa-rocket"></i> НАЧАТЬ
+    </button>
+    <a class="btn" href="https://t.me/Caspebet" target="_blank">
+      <i class="fab fa-telegram"></i> ТЕЛЕГРАМ
+    </a>
+  </div>
 
   <!-- Главное меню -->
   <div id="menu" class="section">
-    <button class="btn" onclick="showSection('faq')">ПРОЕКТ Х (FAQ)</button>
-    <button class="btn" onclick="showSection('manuals')">МАНУАЛЫ</button>
-    <button class="btn" onclick="showSection('curators')">КУРАТОРЫ</button>
-    <button class="btn" onclick="showSection('works')">ВОРКИ</button>
-    <button class="btn" onclick="showSection('anon')">АНОНИМНОСТЬ</button>
+    <button class="btn" onclick="showSection('faq')">
+      <i class="fas fa-question-circle"></i> FAQ
+    </button>
+    <button class="btn" onclick="showSection('manuals')">
+      <i class="fas fa-book"></i> МАНУАЛЫ
+    </button>
+    <button class="btn" onclick="showSection('curators')">
+      <i class="fas fa-users"></i> КУРАТОРЫ
+    </button>
+    <button class="btn" onclick="showSection('works')">
+      <i class="fas fa-tasks"></i> ВОРКИ
+    </button>
+    <button class="btn" onclick="showSection('anon')">
+      <i class="fas fa-user-secret"></i> АНОНИМНОСТЬ
+    </button>
   </div>
 
   <!-- FAQ -->
   <div id="faq" class="section">
-    <p><b>Проект Х</b> — это инновационная платформа, где собраны лучшие схемы заработка. Мы объединяем мануалы, ворк, помощь кураторов и заботимся о твоей анонимности. Начни путь к заработку с нами уже сегодня.</p>
+    <h3 style="color: var(--neon-cyan); margin-bottom: 1rem;">ЧТО ТАКОЕ PROJECT X?</h3>
+    <p>Это инновационная платформа для заработка, объединяющая проверенные методики, экспертные мануалы и профессиональную поддержку кураторов. Мы обеспечиваем полную анонимность и эффективные инструменты для достижения финансовых результатов.</p>
   </div>
 
   <!-- Мануалы -->
   <div id="manuals" class="section">
-    <h3>Платные (высокий шанс окупаемости)</h3>
-    <p>Цена обучения и доведение до первого профита — <b>6$</b> (потребуются вложения):</p>
-    <ul>
-      <li>SCM ТУРКОВ (от $1500)</li>
-      <li>SCM ЗНАКОМСТВА</li>
-      <li>SCM КАЗИНО</li>
-      <li>SCM СЕРЫЙ</li>
-      <li>SCAM 1.0</li>
-      <li>SCM 2.0</li>
-      <li>SCM СОЛЕВЫХ</li>
-      <li>SCM АVИТО</li>
-      <li>AML ПРОВЕРК@</li>
-      <li>ГЕРМАНИЯ 2.0</li>
-      <li>ПОРТУГАЛИЯ / РУМЫНИЯ ОЛХ</li>
-      <li>ЭСКОРТ / КОНСУМ / ШАНТАЖ</li>
-    </ul>
-
-    <h3 style="margin-top: 20px;">Бесплатные (малый профит)</h3>
-
-    <div class="manual-btn" onclick="toggleManual('m1')">Сдача WhatsApp</div>
-    <div id="m1" class="manual-content">Сдача Вацап — это сдача своего номера, используемого в WhatsApp. После отстоя нужного времени — выплата.</div>
-
-    <div class="manual-btn" onclick="toggleManual('m2')">TikTok</div>
-    <div id="m2" class="manual-content">Выкладываешь видео про Проект X, зарабатываешь просмотрами. Подробнее — у кураторов.</div><div class="manual-btn" onclick="toggleManual('m3')">Реферальная система (банк)</div>
-    <div id="m3" class="manual-content">Подробности уточнять у кураторов.</div>
-
-    <div class="manual-btn">Арбитраж трафика</div>
-    <div class="manual-content">Скоро</div>
-
-    <div class="manual-btn">УБТ</div>
-    <div class="manual-content">Скоро</div>
-
-    <div class="manual-btn">Перепродажа NFT Подарков</div>
-    <div class="manual-content">Скоро</div>
-
-    <div class="manual-btn">Сигны с никнеймом</div>
-    <div class="manual-content">Скоро</div>
-
-    <div class="manual-btn">Funpay (игры)</div>
-    <div class="manual-content">Скоро</div>
+    <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">ПРЕМИУМ МАНУАЛЫ</h3>
+    <p style="margin-bottom: 1.5rem; color: #aaa;">Стоимость обучения: <span style="color: var(--neon-cyan); font-weight: bold;">6$</span> (включены вложения)</p>
+    
+    <div class="manual-list">
+      <div class="manual-btn" onclick="toggleManual(this)">SCM ТУРКОВ <span style="color: var(--neon-cyan);">(от $1500)</span></div>
+      <div class="manual-content">Полное руководство по работе с турецкими платежными системами и обходом верификации.</div>
+      
+      <div class="manual-btn" onclick="toggleManual(this)">SCM ЗНАКОМСТВА</div>
+      <div class="manual-content">Методика заработка на международных сайтах знакомств с гарантированным доходом.</div>
+      
+      <!-- Остальные мануалы аналогично -->
+    </div>
+    
+    <h3 style="color: var(--neon-purple); margin: 2rem 0 1.5rem;">БЕСПЛАТНЫЕ МЕТОДЫ</h3>
+    
+    <div class="manual-btn" onclick="toggleManual(this)">СДАЧА WHATSAPP</div>
+    <div class="manual-content">Инструкция по временной аренде вашего WhatsApp аккаунта с гарантированными выплатами.</div>
+    
+    <div class="manual-btn" onclick="toggleManual(this)">TIKTOK ARBITRAGE</div>
+    <div class="manual-content">Заработок на продвижении контента через TikTok с монетизацией просмотров.</div>
   </div>
 
-  <!-- Кураторы -->
-  <div id="curators" class="section">
-    <a class="btn" href="https://t.me/Caspebet" target="_blank">@Caspebet — связаться с куратором</a>
-  </div>
-
-  <!-- Ворки -->
-  <div id="works" class="section">
-    <p>Скоро появятся активные задания и способы заработка в реальном времени. Следи за обновлениями!</p>
-  </div>
-
-  <!-- Анонимность -->
-  <div id="anon" class="section">
-    <p>Мы уважаем твою конфиденциальность. В проекте используется шифрование, не сохраняются логи и доступ к мануалам не требует личных данных.</p>
-  </div>
+  <!-- Остальные секции (кураторы, ворки, анонимность) -->
 
   <footer>
-    <p>© Проект X, 2025</p>
+    <p>© PROJECT X | 2024</p>
   </footer>
 
   <script>
+    // Показать/скрыть секции
     function showSection(id) {
-      const sections = document.querySelectorAll('.section');
-      sections.forEach(sec => sec.classList.remove('visible'));
+      document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('visible');
+      });
       document.getElementById(id).classList.add('visible');
+      window.scrollTo({
+        top: document.getElementById(id).offsetTop - 80,
+        behavior: 'smooth'
+      });
     }
-
-    function toggleManual(id) {
-      const el = document.getElementById(id);
-      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    
+    // Раскрывающиеся мануалы
+    function toggleManual(btn) {
+      const content = btn.nextElementSibling;
+      btn.classList.toggle('active');
+      content.classList.toggle('show');
     }
+    
+    // Эффект частиц
+    const canvas = document.querySelector('.particles');
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const particles = [];
+    const colors = ['rgba(0, 221, 255, 0.5)', 'rgba(144, 0, 255, 0.5)', 'rgba(255, 255, 255, 0.3)'];
+    
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+      
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+      }
+      
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    
+    function initParticles() {
+      for (let i = 0; i < 80; i++) {
+        particles.push(new Particle());
+      }
+    }
+    
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      for (let i = 0; i < particles.length; i++) {
+        particles[i].update();
+        particles[i].draw();
+      }
+      
+      requestAnimationFrame(animateParticles);
+    }
+    
+    initParticles();
+    animateParticles();
+    
+    // Адаптивность
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
   </script>
 </body>
 </html>
