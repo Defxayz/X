@@ -3,71 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PROJECT X | FINAL</title>
+  <title>PROJECT X | ULTIMATE</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
   <style>
     :root {
       --neon-cyan: #0df;
       --neon-purple: #90f;
+      --neon-pink: #f0f;
       --dark-bg: #0a0a12;
       --darker-bg: #07070c;
       --card-bg: rgba(15, 15, 25, 0.8);
+      --text-primary: #fff;
+      --text-secondary: #aaa;
     }
-    
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
       font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    
+
     @font-face {
       font-family: 'Rajdhani';
-      src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+      src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&display=swap');
     }
-    
+
     body {
       background: var(--dark-bg);
-      color: white;
+      color: var(--text-primary);
       min-height: 100vh;
-      background-image: 
-        radial-gradient(circle at 20% 30%, rgba(0, 221, 255, 0.15) 0%, transparent 25%),
-        radial-gradient(circle at 80% 70%, rgba(144, 0, 255, 0.15) 0%, transparent 25%);
       overflow-x: hidden;
+      overscroll-behavior: none;
     }
-    
-    /* Анимация перехода */
-    .page-transition {
+
+    /* ==================== LOADER ==================== */
+    #preloader {
       position: fixed;
       top: 0;
-      left: -100%;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
-      z-index: 1000;
-      transition: left 0.6s cubic-bezier(0.85, 0, 0.15, 1);
+      background: var(--darker-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease-out;
     }
-    
-    .page-transition.active {
-      left: 0;
+
+    .loader-logo {
+      font-size: 4rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 10px rgba(0, 221, 255, 0.3);
+      animation: neon-flicker 3s infinite alternate;
     }
-    
-    .main-content {
-      transition: opacity 0.4s ease;
-    }
-    
-    .main-content.hide {
-      opacity: 0;
-    }
-    
-    header {
-      text-align: center;
-      padding: 2rem 0;
+
+    .loader-bar {
+      width: 300px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
       position: relative;
     }
-    
+
+    .loader-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+      transition: width 0.3s ease;
+    }
+
+    @keyframes neon-flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        text-shadow: 
+          0 0 5px var(--neon-cyan),
+          0 0 10px var(--neon-cyan),
+          0 0 15px var(--neon-cyan),
+          0 0 20px var(--neon-purple),
+          0 0 35px var(--neon-purple);
+      }
+      20%, 24%, 55% { 
+        text-shadow: none;
+      }
+    }
+
+    /* ==================== MAIN CONTENT ==================== */
+    #main-content {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    #main-content.loaded {
+      opacity: 1;
+    }
+
+    /* ==================== HEADER ==================== */
+    header {
+      text-align: center;
+      padding: 3rem 0 2rem;
+      position: relative;
+      z-index: 10;
+    }
+
     .logo {
-      font-size: 3.5rem;
+      font-size: 4rem;
       font-weight: 700;
       background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
       -webkit-background-clip: text;
@@ -76,46 +130,54 @@
       text-shadow: 0 0 10px rgba(0, 221, 255, 0.3);
       letter-spacing: 2px;
       margin-bottom: 0.5rem;
-      animation: glow 2s ease-in-out infinite alternate;
+      animation: neon-flicker 3s infinite alternate;
     }
-    
+
     .tagline {
-      font-size: 1.2rem;
-      color: #aaa;
+      font-size: 1.3rem;
+      color: var(--text-secondary);
       font-weight: 300;
       letter-spacing: 1px;
+      opacity: 0;
+      transform: translateY(20px);
     }
-    
+
+    /* ==================== BUTTONS ==================== */
     .btn-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      padding: 1rem;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 10;
     }
-    
+
     .btn {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.8rem;
-      width: 280px;
-      padding: 1.2rem;
-      font-size: 1.1rem;
+      gap: 1rem;
+      width: 320px;
+      max-width: 90%;
+      padding: 1.4rem 2rem;
+      font-size: 1.2rem;
       font-weight: 600;
       letter-spacing: 1px;
-      color: white;
+      color: var(--text-primary);
       background: var(--card-bg);
       border: none;
-      border-radius: 12px;
+      border-radius: 16px;
       cursor: pointer;
       overflow: hidden;
       transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
       z-index: 1;
+      backdrop-filter: blur(10px);
+      animation: breath 4s ease-in-out infinite;
     }
-    
+
     .btn::before {
       content: '';
       position: absolute;
@@ -123,132 +185,297 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+      background: linear-gradient(
+        45deg, 
+        var(--neon-cyan), 
+        var(--neon-purple),
+        var(--neon-cyan)
+      );
+      background-size: 200% auto;
       z-index: -1;
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.6s ease;
+      animation: gradient-flow 3s linear infinite;
     }
-    
+
     .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(0, 221, 255, 0.3);
+      transform: perspective(500px) rotateX(10deg) translateY(-5px) scale(1.03);
+      box-shadow: 0 15px 35px rgba(0, 221, 255, 0.4);
     }
-    
+
     .btn:hover::before {
       opacity: 1;
     }
-    
+
     .btn:active {
-      transform: translateY(1px);
+      transform: translateY(2px) scale(0.98);
     }
-    
+
     .btn i {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
-    
+
+    @keyframes breath {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+
+    @keyframes gradient-flow {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ==================== SECTIONS ==================== */
     .section {
       display: none;
-      max-width: 800px;
+      max-width: 900px;
       margin: 2rem auto;
-      padding: 2rem;
+      padding: 2.5rem;
       background: var(--card-bg);
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      border-radius: 20px;
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
       position: relative;
+      z-index: 5;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
+                  opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     .close-btn {
       position: absolute;
-      top: 15px;
-      right: 15px;
-      font-size: 1.5rem;
-      color: #aaa;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--text-secondary);
       cursor: pointer;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
     }
-    
+
     .close-btn:hover {
       color: var(--neon-cyan);
+      transform: rotate(90deg);
+      background: rgba(0, 221, 255, 0.1);
     }
-    
-    .section.visible {
-      display: block;
+
+    .section h3 {
+      color: var(--neon-cyan);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      text-align: center;
     }
-    
+
+    .section p {
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+    }
+
+    /* ==================== MANUAL BUTTONS ==================== */
+    .manual-list {
+      margin: 2rem 0;
+    }
+
     .manual-btn {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1rem 1.5rem;
-      margin: 0.8rem 0;
+      padding: 1.2rem 1.8rem;
+      margin: 1rem 0;
       background: rgba(30, 30, 45, 0.7);
-      border: 1px solid rgba(0, 221, 255, 0.1);
-      border-radius: 10px;
+      border: 1px solid rgba(0, 221, 255, 0.15);
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
       text-decoration: none;
-      color: white;
+      color: var(--text-primary);
+      position: relative;
+      overflow: hidden;
     }
-    
+
+    .manual-btn i {
+      font-size: 1.4rem;
+      margin-right: 1rem;
+      color: var(--neon-cyan);
+    }
+
     .manual-btn:hover {
       background: rgba(0, 221, 255, 0.1);
       border-color: var(--neon-cyan);
+      transform: translateX(8px);
+      box-shadow: 0 5px 15px rgba(0, 221, 255, 0.2);
+    }
+
+    .manual-btn::after {
+      content: '→';
+      font-size: 1.5rem;
+      color: var(--neon-cyan);
+      transition: transform 0.3s ease;
+    }
+
+    .manual-btn:hover::after {
       transform: translateX(5px);
     }
-    
+
+    /* ==================== FOOTER ==================== */
     footer {
       text-align: center;
-      padding: 2rem;
-      color: #555;
+      padding: 3rem 2rem;
+      color: var(--text-secondary);
       font-size: 0.9rem;
+      position: relative;
+      z-index: 10;
     }
-    
-    /* Анимации */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes glow {
-      from { text-shadow: 0 0 10px rgba(0, 221, 255, 0.3); }
-      to { text-shadow: 0 0 20px rgba(144, 0, 255, 0.4); }
-    }
-    
-    /* Эффект частиц */
-    .particles {
+
+    /* ==================== 3D BACKGROUND ==================== */
+    #webgl-bg {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      pointer-events: none;
       z-index: -1;
+      opacity: 0.3;
     }
-    
-    /* Адаптивность */
+
+    /* ==================== CHAT BOT ==================== */
+    .chatbot-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(45deg, var(--neon-cyan), var(--neon-purple));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: white;
+      box-shadow: 0 0 20px rgba(0, 221, 255, 0.5);
+      cursor: pointer;
+      z-index: 100;
+      animation: pulse 2s infinite;
+      transition: all 0.3s ease;
+    }
+
+    .chatbot-btn:hover {
+      transform: scale(1.1) rotate(10deg);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 221, 255, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(0, 221, 255, 0.8); }
+    }
+
+    /* ==================== THEME TOGGLE ==================== */
+    .theme-toggle {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 60px;
+      height: 60px;
+      background: var(--card-bg);
+      border: 1px solid var(--neon-cyan);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--neon-cyan);
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+
+    .theme-toggle:hover {
+      background: rgba(0, 221, 255, 0.1);
+      transform: rotate(30deg);
+    }
+
+    /* ==================== RESPONSIVE ==================== */
     @media (max-width: 768px) {
       .logo {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
+      }
+      
+      .tagline {
+        font-size: 1.1rem;
+      }
+      
+      .btn {
+        width: 280px;
+        padding: 1.2rem;
+        font-size: 1.1rem;
       }
       
       .section {
-        padding: 1.5rem;
-        margin: 1.5rem;
+        padding: 1.8rem;
+        margin: 1.8rem;
       }
+      
+      .chatbot-btn, .theme-toggle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+        bottom: 20px;
+      }
+    }
+
+    /* ==================== SECURITY MESSAGE ==================== */
+    #security-alert {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1rem;
+      background: rgba(255, 0, 0, 0.2);
+      color: #ff5555;
+      text-align: center;
+      font-weight: 600;
+      z-index: 9999;
+      display: none;
+      backdrop-filter: blur(5px);
+      border-bottom: 1px solid #ff0000;
     }
   </style>
 </head>
 <body>
-  <!-- Эффект перехода -->
-  <div class="page-transition"></div>
-  
-  <!-- Эффект частиц -->
-  <canvas class="particles"></canvas>
-  
-  <div class="main-content">
+  <!-- ==================== PRELOADER ==================== -->
+  <div id="preloader">
+    <div class="loader-logo">PROJECT X</div>
+    <div class="loader-bar">
+      <div class="loader-progress"></div>
+    </div>
+  </div>
+
+  <!-- ==================== SECURITY ALERT ==================== -->
+  <div id="security-alert">
+    <i class="fas fa-shield-alt"></i> Обнаружена попытка взлома! Сессия будет завершена через 10 секунд.
+  </div>
+
+  <!-- ==================== 3D BACKGROUND ==================== -->
+  <div id="webgl-bg"></div>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <div id="main-content">
     <header>
       <div class="logo">PROJECT X</div>
       <div class="tagline">ИННОВАЦИОННЫЙ ЗАРАБОТОК</div>
@@ -258,12 +485,12 @@
       <button class="btn" id="startBtn">
         <i class="fas fa-rocket"></i> НАЧАТЬ
       </button>
-      <a class="btn" href="https://t.me/Caspebet" target="_blank">
+      <a class="btn" href="https://t.me/Caspebet" target="_blank" rel="noopener noreferrer">
         <i class="fab fa-telegram"></i> ТЕЛЕГРАМ
       </a>
     </div>
 
-    <!-- Главное меню -->
+    <!-- ==================== MAIN MENU ==================== -->
     <div id="menu" class="section">
       <span class="close-btn" onclick="hideSection('menu')">&times;</span>
       <button class="btn" onclick="showSection('faq')">
@@ -283,208 +510,407 @@
       </button>
     </div>
 
-    <!-- FAQ -->
+    <!-- ==================== FAQ SECTION ==================== -->
     <div id="faq" class="section">
       <span class="close-btn" onclick="hideSection('faq')">&times;</span>
-      <h3 style="color: var(--neon-cyan); margin-bottom: 1rem;">ЧТО ТАКОЕ PROJECT X?</h3>
+      <h3>ЧТО ТАКОЕ PROJECT X?</h3>
       <p>Это инновационная платформа для заработка, объединяющая проверенные методики, экспертные мануалы и профессиональную поддержку кураторов. Мы обеспечиваем полную анонимность и эффективные инструменты для достижения финансовых результатов.</p>
+      <p>Наша миссия - сделать высокодоходные инструменты доступными для каждого, кто готов развиваться и работать на результат.</p>
     </div>
 
-    <!-- Мануалы (твои ссылки) -->
+    <!-- ==================== MANUALS SECTION ==================== -->
     <div id="manuals" class="section">
       <span class="close-btn" onclick="hideSection('manuals')">&times;</span>
-      <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">МАНУАЛЫ</h3>
-      <p style="margin-bottom: 1.5rem; color: #aaa;">Выберите мануал для изучения:</p>
+      <h3>ПРЕМИУМ МАНУАЛЫ</h3>
+      <p style="text-align: center; color: var(--neon-cyan); margin-bottom: 2rem;">Выберите мануал для изучения:</p>
       
       <div class="manual-list">
-        <a href="https://telegra.ph/Manual-po-Kripte-02-24" target="_blank" class="manual-btn">
+        <a href="https://telegra.ph/Manual-po-Kripte-02-24" target="_blank" rel="noopener noreferrer" class="manual-btn">
           <i class="fab fa-bitcoin"></i> МАНУАЛ ПО КРИПТЕ
         </a>
         
-        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" rel="noopener noreferrer" class="manual-btn">
           <i class="fab fa-apple"></i> ICLOUD
         </a>
         
-        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" rel="noopener noreferrer" class="manual-btn">
           <i class="fas fa-globe-europe"></i> ОБЩИЙ МАНУАЛ ЕВРОПА 2.00
         </a>
         
-        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" rel="noopener noreferrer" class="manual-btn">
           <i class="fas fa-book"></i> ПОЛНЫЙ МАНУАЛ 2.00
         </a>
       </div>
     </div>
 
-    <!-- Ворки (старые мануалы) -->
+    <!-- ==================== WORKS SECTION ==================== -->
     <div id="works" class="section">
       <span class="close-btn" onclick="hideSection('works')">&times;</span>
-      <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem;">ВОРКИ</h3>
+      <h3>ДОСТУПНЫЕ ВОРКИ</h3>
       
-      <h4 style="color: var(--neon-cyan); margin: 1.5rem 0 1rem;">Платные (высокий шанс окупаемости)</h4>
-      <p>Цена обучения — <b>6$</b> (потребуются вложения):</p>
-      <ul style="margin: 1rem 0 1rem 1.5rem;">
-        <li style="margin-bottom: 0.5rem;">SCM ТУРКОВ (от $1500)</li>
-        <li style="margin-bottom: 0.5rem;">SCM ЗНАКОМСТВА</li>
-        <li style="margin-bottom: 0.5rem;">SCM КАЗИНО</li>
-        <li style="margin-bottom: 0.5rem;">SCM СЕРЫЙ</li>
-        <li style="margin-bottom: 0.5rem;">SCAM 1.0</li>
-        <li style="margin-bottom: 0.5rem;">SCM 2.0</li>
-        <li style="margin-bottom: 0.5rem;">SCM СОЛЕВЫХ</li>
-        <li style="margin-bottom: 0.5rem;">SCM АVИТО</li>
-        <li style="margin-bottom: 0.5rem;">AML ПРОВЕРК@</li>
-        <li style="margin-bottom: 0.5rem;">ГЕРМАНИЯ 2.0</li>
-        <li style="margin-bottom: 0.5rem;">ПОРТУГАЛИЯ / РУМЫНИЯ ОЛХ</li>
+      <h4 style="color: var(--neon-cyan); margin: 2rem 0 1rem;">Платные (высокий шанс окупаемости)</h4>
+      <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">Цена обучения: <span style="color: var(--neon-cyan); font-weight: bold;">6$</span> (включены вложения)</p>
+      <ul style="margin: 1rem 0 2rem 1.5rem;">
+        <li style="margin-bottom: 0.8rem;">SCM ТУРКОВ (от $1500)</li>
+        <li style="margin-bottom: 0.8rem;">SCM ЗНАКОМСТВА</li>
+        <li style="margin-bottom: 0.8rem;">SCM КАЗИНО</li>
+        <li style="margin-bottom: 0.8rem;">SCM СЕРЫЙ</li>
+        <li style="margin-bottom: 0.8rem;">SCAM 1.0</li>
+        <li style="margin-bottom: 0.8rem;">SCM 2.0</li>
+        <li style="margin-bottom: 0.8rem;">SCM СОЛЕВЫХ</li>
+        <li style="margin-bottom: 0.8rem;">SCM АVИТО</li>
+        <li style="margin-bottom: 0.8rem;">AML ПРОВЕРК@</li>
+        <li style="margin-bottom: 0.8rem;">ГЕРМАНИЯ 2.0</li>
+        <li style="margin-bottom: 0.8rem;">ПОРТУГАЛИЯ / РУМЫНИЯ ОЛХ</li>
         <li>ЭСКОРТ / КОНСУМ / ШАНТАЖ</li>
       </ul>
 
-      <h4 style="color: var(--neon-purple); margin: 1.5rem 0 1rem;">Бесплатные (малый профит)</h4>
+      <h4 style="color: var(--neon-purple); margin: 2rem 0 1rem;">Бесплатные (малый профит)</h4>
 
       <div class="manual-btn" onclick="toggleManual('m1')">
         <i class="fab fa-whatsapp"></i> Сдача WhatsApp
       </div>
-      <div id="m1" class="manual-content">Сдача Вацап — это сдача своего номера, используемого в WhatsApp. После отстоя нужного времени — выплата.</div>
+      <div id="m1" class="manual-content" style="display: none; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; margin-top: 0.5rem;">
+        Сдача Вацап — это сдача своего номера, используемого в WhatsApp. После отстоя нужного времени — выплата.
+      </div>
 
       <div class="manual-btn" onclick="toggleManual('m2')">
         <i class="fab fa-tiktok"></i> TikTok
       </div>
-      <div id="m2" class="manual-content">Выкладываешь видео про Проект X, зарабатываешь просмотрами. Подробнее — у кураторов.</div>
+      <div id="m2" class="manual-content" style="display: none; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px; margin-top: 0.5rem;">
+        Выкладываешь видео про Проект X, зарабатываешь просмотрами. Подробнее — у кураторов.
+      </div>
     </div>
 
-    <!-- Кураторы -->
+    <!-- ==================== CURATORS SECTION ==================== -->
     <div id="curators" class="section">
       <span class="close-btn" onclick="hideSection('curators')">&times;</span>
-      <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem;">НАШИ КУРАТОРЫ</h3>
-      <a class="btn" href="https://t.me/Caspebet" target="_blank" style="margin-top: 1rem;">
+      <h3>НАШИ КУРАТОРЫ</h3>
+      <a class="btn" href="https://t.me/Caspebet" target="_blank" rel="noopener noreferrer" style="margin: 2rem auto;">
         <i class="fab fa-telegram"></i> @Caspebet
       </a>
-      <p style="margin-top: 1.5rem; color: #aaa;">Наши кураторы помогут вам разобраться во всех вопросах и доведут до первого заработка.</p>
+      <p style="text-align: center; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+        Наши кураторы помогут вам разобраться во всех вопросах и доведут до первого заработка. Обращайтесь в любое время — отвечаем быстро и по делу.
+      </p>
     </div>
 
-    <!-- Анонимность -->
+    <!-- ==================== ANONYMITY SECTION ==================== -->
     <div id="anon" class="section">
       <span class="close-btn" onclick="hideSection('anon')">&times;</span>
-      <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">АНОНИМНОСТЬ</h3>
-      <p>Мы используем передовые технологии для защиты ваших данных:</p>
-      <ul style="margin-top: 1rem; padding-left: 1.5rem;">
-        <li style="margin-bottom: 0.5rem;">Шифрование всех соединений</li>
-        <li style="margin-bottom: 0.5rem;">Отсутствие логирования</li>
-        <li style="margin-bottom: 0.5rem;">Анонимные платежи</li>
-        <li>Рекомендации по защите персональных данных</li>
-      </ul>
+      <h3>ПОЛНАЯ АНОНИМНОСТЬ</h3>
+      <p style="text-align: center; margin-bottom: 2rem;">Мы используем передовые технологии для защиты ваших данных:</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+        <div style="background: rgba(0, 221, 255, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(0, 221, 255, 0.1);">
+          <h4 style="color: var(--neon-cyan); margin-bottom: 1rem;"><i class="fas fa-lock"></i> Шифрование</h4>
+          <p style="color: var(--text-secondary);">Все данные передаются через защищенные каналы с end-to-end шифрованием.</p>
+        </div>
+        
+        <div style="background: rgba(0, 221, 255, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(0, 221, 255, 0.1);">
+          <h4 style="color: var(--neon-cyan); margin-bottom: 1rem;"><i class="fas fa-ban"></i> No-Log</h4>
+          <p style="color: var(--text-secondary);">Мы не храним логи ваших действий и не требуем личных данных.</p>
+        </div>
+        
+        <div style="background: rgba(0, 221, 255, 0.05); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(0, 221, 255, 0.1);">
+          <h4 style="color: var(--neon-cyan); margin-bottom: 1rem;"><i class="fas fa-coins"></i> Криптоплатежи</h4>
+          <p style="color: var(--text-secondary);">Принимаем платежи в BTC, USDT и других анонимных криптовалютах.</p>
+        </div>
+      </div>
     </div>
 
+    <!-- ==================== FOOTER ==================== -->
     <footer>
       <p>© PROJECT X | 2024</p>
+      <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #555;">
+        Все права защищены. Любое копирование материалов запрещено.
+      </p>
     </footer>
+
+    <!-- ==================== CHAT BOT ==================== -->
+    <div class="chatbot-btn" onclick="window.open('https://t.me/Caspebet', '_blank')">
+      <i class="fab fa-telegram"></i>
+    </div>
+
+    <!-- ==================== THEME TOGGLE ==================== -->
+    <div class="theme-toggle" onclick="toggleTheme()">
+      <i class="fas fa-moon"></i>
+    </div>
   </div>
 
+  <!-- ==================== SCRIPTS ==================== -->
   <script>
-    // Эффект перехода при нажатии на кнопку "Начать"
-    document.getElementById('startBtn').addEventListener('click', function() {
-      const transition = document.querySelector('.page-transition');
-      const mainContent = document.querySelector('.main-content');
-      
-      // Запускаем анимацию перехода
-      mainContent.classList.add('hide');
-      transition.classList.add('active');
-      
-      // После завершения анимации показываем меню
-      setTimeout(() => {
-        document.getElementById('menu').classList.add('visible');
-        transition.classList.remove('active');
-        mainContent.classList.remove('hide');
+    // ==================== PRELOADER ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Имитация загрузки
+      let progress = 0;
+      const progressBar = document.querySelector('.loader-progress');
+      const loaderInterval = setInterval(() => {
+        progress += Math.random() * 10;
+        if (progress > 100) progress = 100;
+        progressBar.style.width = `${progress}%`;
         
-        // Плавный скролл к меню
-        window.scrollTo({
-          top: document.getElementById('menu').offsetTop - 80,
-          behavior: 'smooth'
-        });
-      }, 600);
+        if (progress >= 100) {
+          clearInterval(loaderInterval);
+          document.getElementById('preloader').style.opacity = '0';
+          setTimeout(() => {
+            document.getElementById('preloader').remove();
+            document.getElementById('main-content').classList.add('loaded');
+            
+            // Анимация появления заголовка
+            anime({
+              targets: '.tagline',
+              opacity: 1,
+              translateY: 0,
+              duration: 1000,
+              easing: 'easeOutExpo'
+            });
+            
+            // Запуск 3D фона
+            init3DBackground();
+          }, 500);
+        }
+      }, 100);
     });
-    
-    // Показать секцию
+
+    // ==================== 3D BACKGROUND ====================
+    function init3DBackground() {
+      const container = document.getElementById('webgl-bg');
+      
+      // Сцена
+      const scene = new THREE.Scene();
+      
+      // Камера
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 30;
+      
+      // Рендерер
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      container.appendChild(renderer.domElement);
+      
+      // Частицы
+      const particlesGeometry = new THREE.BufferGeometry();
+      const particleCount = 1000;
+      
+      const posArray = new Float32Array(particleCount * 3);
+      const colorArray = new Float32Array(particleCount * 3);
+      
+      for(let i = 0; i < particleCount * 3; i++) {
+        posArray[i] = (Math.random() - 0.5) * 100;
+        colorArray[i] = Math.random();
+      }
+      
+      particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+      
+      const particlesMaterial = new THREE.PointsMaterial({
+        size: 0.2,
+        transparent: true,
+        opacity: 0.8,
+        vertexColors: true,
+        blending: THREE.AdditiveBlending
+      });
+      
+      const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particlesMesh);
+      
+      // Анимация
+      function animate() {
+        requestAnimationFrame(animate);
+        
+        particlesMesh.rotation.x += 0.0005;
+        particlesMesh.rotation.y += 0.0005;
+        
+        renderer.render(scene, camera);
+      }
+      
+      animate();
+      
+      // Ресайз
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    }
+
+    // ==================== SECTION MANAGEMENT ====================
     function showSection(id) {
+      // Скрыть все секции
       document.querySelectorAll('.section').forEach(sec => {
         sec.classList.remove('visible');
       });
-      document.getElementById(id).classList.add('visible');
+      
+      // Показать выбранную
+      const section = document.getElementById(id);
+      section.classList.add('visible');
+      
+      // Плавный скролл
       window.scrollTo({
-        top: document.getElementById(id).offsetTop - 80,
+        top: section.offsetTop - 80,
         behavior: 'smooth'
       });
+      
+      // Анимация частиц при открытии
+      createParticles(section.getBoundingClientRect().left + section.offsetWidth/2, 
+                     section.getBoundingClientRect().top + section.offsetHeight/2);
     }
     
-    // Скрыть секцию
     function hideSection(id) {
       document.getElementById(id).classList.remove('visible');
     }
     
-    // Раскрывающиеся мануалы в "Ворках"
     function toggleManual(id) {
       const content = document.getElementById(id);
       content.style.display = content.style.display === 'block' ? 'none' : 'block';
     }
-    
-    // Эффект частиц
-    const canvas = document.querySelector('.particles');
-    const ctx = canvas.getContext('2d');
-    
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    
-    const particles = [];
-    const colors = ['rgba(0, 221, 255, 0.5)', 'rgba(144, 0, 255, 0.5)', 'rgba(255, 255, 255, 0.3)'];
-    
-    class Particle {
-      constructor() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-        this.color = colors[Math.floor(Math.random() * colors.length)];
-      }
-      
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
+
+    // ==================== PARTICLE EFFECTS ====================
+    function createParticles(x, y) {
+      for(let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+          position: fixed;
+          width: 6px;
+          height: 6px;
+          background: ${i % 2 ? '#0df' : '#90f'};
+          border-radius: 50%;
+          pointer-events: none;
+          left: ${x}px;
+          top: ${y}px;
+          z-index: 999;
+        `;
         
-        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
-        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
-      }
-      
-      draw() {
-        ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-    
-    function initParticles() {
-      for (let i = 0; i < 80; i++) {
-        particles.push(new Particle());
+        document.body.appendChild(particle);
+        
+        anime({
+          targets: particle,
+          translateX: Math.random() * 100 - 50,
+          translateY: Math.random() * 100 - 50,
+          opacity: [1, 0],
+          duration: 1000,
+          easing: 'easeOutExpo',
+          complete: () => particle.remove()
+        });
       }
     }
-    
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // ==================== THEME TOGGLE ====================
+    function toggleTheme() {
+      document.body.classList.toggle('light-theme');
       
-      for (let i = 0; i < particles.length; i++) {
-        particles[i].update();
-        particles[i].draw();
+      if (document.body.classList.contains('light-theme')) {
+        document.documentElement.style.setProperty('--dark-bg', '#f0f0f0');
+        document.documentElement.style.setProperty('--darker-bg', '#e0e0e0');
+        document.documentElement.style.setProperty('--card-bg', 'rgba(255, 255, 255, 0.9)');
+        document.documentElement.style.setProperty('--text-primary', '#333');
+        document.documentElement.style.setProperty('--text-secondary', '#666');
+        document.querySelector('.theme-toggle i').className = 'fas fa-sun';
+      } else {
+        document.documentElement.style.setProperty('--dark-bg', '#0a0a12');
+        document.documentElement.style.setProperty('--darker-bg', '#07070c');
+        document.documentElement.style.setProperty('--card-bg', 'rgba(15, 15, 25, 0.8)');
+        document.documentElement.style.setProperty('--text-primary', '#fff');
+        document.documentElement.style.setProperty('--text-secondary', '#aaa');
+        document.querySelector('.theme-toggle i').className = 'fas fa-moon';
       }
-      
-      requestAnimationFrame(animateParticles);
     }
-    
-    initParticles();
-    animateParticles();
-    
-    // Адаптивность
-    window.addEventListener('resize', () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+
+    // ==================== SECURITY PROTECTION ====================
+    // Защита от открытия консоли
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.shiftKey && e.key === 'J')) {
+        e.preventDefault();
+        document.getElementById('security-alert').style.display = 'block';
+        
+        setTimeout(() => {
+          document.getElementById('security-alert').textContent = 'Сессия завершена по соображениям безопасности';
+          setTimeout(() => {
+            window.location.href = 'about:blank';
+          }, 2000);
+        }, 3000);
+      }
+    });
+
+    // Защита от копирования
+    document.addEventListener('copy', function(e) {
+      e.preventDefault();
+      alert('Копирование материалов запрещено!');
+    });
+
+    // ==================== START BUTTON ====================
+    document.getElementById('startBtn').addEventListener('click', function() {
+      // Анимация перехода
+      anime({
+        targets: '#startBtn',
+        scale: 1.2,
+        duration: 300,
+        easing: 'easeInOutSine',
+        direction: 'alternate',
+        complete: () => {
+          showSection('menu');
+        }
+      });
+      
+      // Эффект частиц
+      const rect = this.getBoundingClientRect();
+      createParticles(rect.left + rect.width/2, rect.top + rect.height/2);
+    });
+
+    // ==================== MANUAL BUTTON HOVER EFFECT ====================
+    document.querySelectorAll('.manual-btn').forEach(btn => {
+      btn.addEventListener('mouseenter', function() {
+        anime({
+          targets: this,
+          translateX: 5,
+          duration: 300,
+          easing: 'easeOutExpo'
+        });
+      });
+      
+      btn.addEventListener('mouseleave', function() {
+        anime({
+          targets: this,
+          translateX: 0,
+          duration: 300,
+          easing: 'easeOutExpo'
+        });
+      });
+    });
+
+    // ==================== PARALLAX EFFECT ====================
+    document.addEventListener('mousemove', function(e) {
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      
+      anime({
+        targets: '.btn-container',
+        translateX: x * 20,
+        translateY: y * 20,
+        duration: 1000,
+        easing: 'easeOutExpo'
+      });
+      
+      anime({
+        targets: '.logo',
+        translateX: x * 10,
+        translateY: y * 10,
+        duration: 1000,
+        easing: 'easeOutExpo'
+      });
+    });
+
+    // ==================== INITIAL ANIMATIONS ====================
+    window.addEventListener('load', () => {
+      // Анимация появления кнопок
+      anime({
+        targets: '.btn',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        delay: anime.stagger(100),
+        duration: 800,
+        easing: 'easeOutExpo'
+      });
     });
   </script>
 </body>
