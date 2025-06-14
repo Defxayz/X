@@ -1,152 +1,155 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Проект X</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
   <style>
-    *{box-sizing:border-box;}
-    body {
-      margin:0; padding:0;
-      font-family:'Orbitron',sans-serif;
-      background:#0a0a0a; color:#fff;
-      overflow-x:hidden;
-    }
-    header{position:fixed;top:20px;left:20px;font-size:1.4em;color:#00ffe5;text-shadow:0 0 15px #00ffe5;z-index:100;}
-    .screen{padding:100px 20px;text-align:center;animation:fadeIn .8s;}
-    h1{font-size:2.8em; text-shadow:0 0 10px #00ffe5;margin-bottom:.5em;}
-    p.subtitle{font-size:1.2em;color:#b0b0b0;margin-bottom:2em;}
-
-    .btn {
-      background:linear-gradient(135deg,#111,#1d1d1d);
-      border:1px solid #00ffe5; color:#00ffe5;
-      padding:14px 24px; margin:12px;
-      font-size:1em;font-weight:bold;border-radius:12px;
-      cursor:pointer;transition:.3s;box-shadow:0 0 10px rgba(0,255,229,.2);
-    }
-    .btn:hover{
-      background:#00ffe5; color:#000;
-      transform:scale(1.05);
-      box-shadow:0 0 20px rgba(0,255,229,.5);
-    }
-
-    .hidden{display:none;}
-    .fade{animation:fadeIn .5s ease;}
-
-    .section {
-      max-width:800px;
-      margin:20px auto;
-      background:#121212;
-      border:1px solid #00ffe5;
-      border-radius:8px;
-      box-shadow:0 0 30px rgba(0,255,229,.1);
-      overflow:hidden;
-    }
-    .section-header {
-      background:#1a1a1a;
-      cursor:pointer;
-      padding:16px 20px;
-      display:flex;align-items:center;justify-content:space-between;
-    }
-    .section-header h3 {
-      margin:0; color:#00ffe5; font-size:1.2em;
-    }
-    .section-header span {
-      font-size:1.4em; transform:rotate(0deg);
-      transition:transform .3s;
-    }
-    .section-header.active span {
-      transform:rotate(45deg);
-    }
-    .section-content {
-      display:none;
-      padding:0 20px 16px;
-      color:#ccc; font-size:1em; line-height:1.6;
-    }
-    .section-content p {
-      margin:12px 0;
-    }
-
-    @keyframes fadeIn {
-      from{opacity:0;transform:translateY(20px);}
-      to{opacity:1;transform:translateY(0);}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Orbitron',sans-serif;background:#0a0a0a;color:#fff;overflow-x:hidden}
+    header{position:fixed;top:20px;left:20px;font-size:1.4em;color:#0ff;text-shadow:0 0 10px #0ff;z-index:100}
+    .screen{padding:120px 20px;text-align:center;animation:fadeIn 0.8s}
+    h1{font-size:2.8em;text-shadow:0 0 8px #0ff;margin-bottom:0.5em}
+    p.subtitle{font-size:1.2em;color:#b0b0b0;margin-bottom:2em}
+    .btn{background:linear-gradient(120deg,#111,#222);border:2px solid #0ff;color:#0ff;padding:14px 24px;margin:10px;font-size:1em;border-radius:12px;cursor:pointer;transition:0.3s;box-shadow:0 0 8px rgba(0,255,255,0.2)}
+    .btn:hover{background:#0ff;color:#000;transform:scale(1.05);box-shadow:0 0 20px rgba(0,255,255,0.6)}
+    .hidden{display:none}
+    .fade{animation:fadeIn 0.5s ease}
+    .section{max-width:800px;margin:20px auto;border:1px solid #0ff;border-radius:8px;background:#111;box-shadow:0 0 30px rgba(0,255,255,0.1);overflow:hidden}
+    .section-header{background:#222;padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background 0.3s}
+    .section-header:hover{background:#333}
+    .section-header h3{margin:0;font-size:1.2em;color:#0ff}
+    .section-header span{font-size:1.5em;transition:transform 0.3s}
+    .section-header.active span{transform:rotate(45deg);}
+    .section-content{display:none;padding:16px 20px;color:#ccc;font-size:1em;line-height:1.6}
+    .section-content p, .section-content li{margin:8px 0}
+    .icon-btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#081,#0f9);border:0;border-radius:8px;color:#000;padding:10px 16px;font-weight:bold;cursor:pointer;transition:0.3s;box-shadow:0 0 10px rgba(0,255,153,0.3)}
+    .icon-btn:hover{box-shadow:0 0 20px rgba(0,255,153,0.7);transform:scale(1.03)}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @media screen and (max-width:600px){
+      h1{font-size:2em}
+      .screen{padding:80px 12px}
+      .btn{width:100%;margin:8px 0;padding:14px 18px;font-size:1em}
+      .section{margin:12px auto}
+      .section-header{padding:14px 16px;font-size:1em}
+      .section-content{padding:12px 16px}
     }
   </style>
 </head>
 <body>
-  <header>ПРОЕКТ X</header>
 
-  <!-- главный экран -->
-  <div id="screen1" class="screen">
-    <h1>Добро пожаловать в мир заработка</h1>
-    <p class="subtitle">Твоя новая реальность начинается здесь</p>
-    <button class="btn" onclick="goNext()">🚀 НАЧАТЬ</button>
-    <a class="btn" href="https://t.me/Caspebet" target="_blank">💬 НАПИСАТЬ В TELEGRAM</a>
-  </div>
+<header>ПРОЕКТ X</header>
 
-  <!-- меню -->
-  <div id="screen2" class="screen hidden">
-    <h1>Меню Проекта X</h1>
-    <div class="sections">
-      <!-- FAQ уже есть -->
-      <div class="section">
-        <div class="section-header" onclick="toggleSection(this)">
-          <h3>📘 ПРОЕКТ X (FAQ)</h3><span>+</span>
-        </div>
-        <div class="section-content"><p>Проект X — это твой вход...</p></div>
+<div id="screen1" class="screen fade">
+  <h1>Добро пожаловать в мир заработка</h1>
+  <p class="subtitle">Твоя новая реальность начинается здесь</p>
+  <button class="btn" onclick="goNext()">🚀 НАЧАТЬ</button>
+  <a class="btn" href="https://t.me/Caspebet" target="_blank">💬 НАПИСАТЬ В TELEGRAM</a>
+</div>
+
+<div id="screen2" class="screen hidden fade">
+  <h1>Меню Проекта X</h1>
+  <div class="sections">
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>📘 ПРОЕКТ X (FAQ)</h3><span>＋</span>
       </div>
-      <!-- МАНУАЛЫ -->
-      <div class="section">
-        <div class="section-header" onclick="toggleSection(this)">
-          <h3>📖 МАНУАЛЫ</h3><span>+</span>
-        </div>
-        <div class="section-content">
-          <p><strong>ПЛАТНЫЕ (6$):</strong></p>
-          <ul>
-            <li>SCM ТУРКОВ etc...</li>
-            <!-- full list -->
-          </ul>
-          <p><strong>БЕСПЛАТНЫЕ:</strong></p>
-          <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-              <h3>Сдача WhatsApp</h3><span>+</span>
-            </div>
-            <div class="section-content"><p>Сдача Вацап — это...</p></div>
-          </div>
-          <div class="section">
-            <div class="section-header" onclick="toggleSection(this)">
-              <h3>TikTok</h3><span>+</span>
-            </div>
-            <div class="section-content"><p>Выкладываешь видео про Проект X...</p></div>
-          </div>
-          <!-- …другие -->
-        </div>
+      <div class="section-content">
+        <p>Проект X — твой вход в мир реальных тем улучшения дохода...</p>
       </div>
-      <!-- Кураторы -->
-      <div class="section"><div class="section-header" onclick="toggleSection(this)">
-          <h3>🧑‍💼 КУРАТОРЫ</h3><span>+</span>
-        </div>
-        <div class="section-content">
-          <p><a href="https://t.me/Caspebet" target="_blank">@Caspebet — главный куратор</a></p>
-        </div>
-      </div>
-      <!-- Заглушки -->
-      <div class="section"><div class="section-header"><h3>💼 ВОРКИ</h3><span>+</span></div><div class="section-content"><p>Скоро...</p></div></div>
-      <div class="section"><div class="section-header"><h3>🛡️ АНОНИМНОСТЬ</h3><span>+</span></div><div class="section-content"><p>Скоро...</p></div></div>
     </div>
-  </div>
 
-  <script>
-    function goNext(){
-      document.getElementById('screen1').classList.add('hidden');
-      document.getElementById('screen2').classList.remove('hidden');
-    }
-    function toggleSection(el){
-      el.classList.toggle('active');
-      let c=el.nextElementSibling;
-      c.style.display = (c.style.display==='block'? 'none':'block');
-    }
-  </script>
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>📖 МАНУАЛЫ</h3><span>＋</span>
+      </div>
+      <div class="section-content">
+        <p><strong>ПЛАТНЫЕ (6$):</strong></p>
+        <ul>
+          <li>SCM ТУРКОВ (профит от $1500)</li>
+          <li>SCM ЗНАКОМСТВА</li>
+          <li>SCM КАЗИНО</li>
+          <li>SCM СЕРЫЙ</li>
+          <li>SCAM 1.0</li>
+          <li>SCM 2.0</li>
+          <li>SCM СОЛЕВЫХ</li>
+          <li>SCM АVИТО</li>
+          <li>AML ПРОВЕРК@</li>
+          <li>ГЕРМАНИЯ 2.0</li>
+          <li>ПОРТУГАЛИЯ / РУМЫНИЯ ОЛХ</li>
+          <li>ЭСКОРТ / КОНСУМ / ШАНТАЖ</li>
+        </ul>
+        <p><strong>БЕСПЛАТНЫЕ:</strong></p>
+        <div><button class="icon-btn" onclick="toggleInner(this)">Сдача WhatsApp</button>
+          <div class="section-content hidden">
+            <p>Сдача Вацап — сдаёшь свой номер, отстаёшь время, получаешь выплату.</p>
+          </div>
+        </div>
+        <div>
+          <button class="icon-btn" onclick="toggleInner(this)">TikTok</button>
+          <div class="section-content hidden">
+            <p>Выкладываешь видео про Проект X и зарабатываешь на просмотрах. Подробнее у кураторов.</p>
+          </div>
+        </div>
+        <div>
+          <button class="icon-btn" onclick="toggleInner(this)">Реферальная система с банком</button>
+          <div class="section-content hidden">
+            <p>Узнавать у кураторов.</p>
+          </div>
+        </div>
+        <p>… и ещё:</p>
+        <ul>
+          <li>Арбитраж трафика – Скоро</li>
+          <li>УБТ – Скоро</li>
+          <li>Перепродажа NFT подарков – Скоро</li>
+          <li>Сигны с никнеймом – Скоро</li>
+          <li>Funpay (заработок на играх) – Скоро</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>🧑‍💼 КУРАТОРЫ</h3><span>＋</span>
+      </div>
+      <div class="section-content">
+        <p><a href="https://t.me/Caspebet" target="_blank">@Caspebet — главный куратор</a></p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>💼 ВОРКИ</h3><span>＋</span>
+      </div>
+      <div class="section-content"><p>Скоро…</p></div>
+    </div>
+
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <h3>🛡️ АНОНИМНОСТЬ</h3><span>＋</span>
+      </div>
+      <div class="section-content"><p>Скоро…</p></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function goNext(){
+  document.getElementById('screen1').classList.add('hidden');
+  document.getElementById('screen2').classList.remove('hidden');
+}
+function toggleSection(el){
+  el.classList.toggle('active');
+  el.nextElementSibling.style.display = (el.nextElementSibling.style.display==='block'? 'none':'block');
+}
+function toggleInner(btn){
+  let content = btn.nextElementSibling;
+  content.classList.toggle('hidden');
+}
+</script>
+
 </body>
 </html>
