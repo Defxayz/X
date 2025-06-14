@@ -36,7 +36,7 @@
       overflow-x: hidden;
     }
     
-    /* Анимация перехода между страницами */
+    /* Анимация перехода */
     .page-transition {
       position: fixed;
       top: 0;
@@ -157,6 +157,21 @@
       border: 1px solid rgba(255, 255, 255, 0.05);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+      position: relative;
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      color: #aaa;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    
+    .close-btn:hover {
+      color: var(--neon-cyan);
     }
     
     .section.visible {
@@ -248,10 +263,14 @@
       </a>
     </div>
 
-    <!-- Главное меню (появится после перехода) -->
+    <!-- Главное меню -->
     <div id="menu" class="section">
+      <span class="close-btn" onclick="hideSection('menu')">&times;</span>
       <button class="btn" onclick="showSection('faq')">
         <i class="fas fa-question-circle"></i> FAQ
+      </button>
+      <button class="btn" onclick="showSection('manuals')">
+        <i class="fas fa-book"></i> МАНУАЛЫ
       </button>
       <button class="btn" onclick="showSection('works')">
         <i class="fas fa-tasks"></i> ВОРКИ
@@ -266,13 +285,15 @@
 
     <!-- FAQ -->
     <div id="faq" class="section">
+      <span class="close-btn" onclick="hideSection('faq')">&times;</span>
       <h3 style="color: var(--neon-cyan); margin-bottom: 1rem;">ЧТО ТАКОЕ PROJECT X?</h3>
       <p>Это инновационная платформа для заработка, объединяющая проверенные методики, экспертные мануалы и профессиональную поддержку кураторов. Мы обеспечиваем полную анонимность и эффективные инструменты для достижения финансовых результатов.</p>
     </div>
 
-    <!-- Ворки (с мануалами) -->
-    <div id="works" class="section">
-      <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">ДОСТУПНЫЕ ВОРКИ</h3>
+    <!-- Мануалы (твои ссылки) -->
+    <div id="manuals" class="section">
+      <span class="close-btn" onclick="hideSection('manuals')">&times;</span>
+      <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">МАНУАЛЫ</h3>
       <p style="margin-bottom: 1.5rem; color: #aaa;">Выберите мануал для изучения:</p>
       
       <div class="manual-list">
@@ -294,8 +315,44 @@
       </div>
     </div>
 
+    <!-- Ворки (старые мануалы) -->
+    <div id="works" class="section">
+      <span class="close-btn" onclick="hideSection('works')">&times;</span>
+      <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem;">ВОРКИ</h3>
+      
+      <h4 style="color: var(--neon-cyan); margin: 1.5rem 0 1rem;">Платные (высокий шанс окупаемости)</h4>
+      <p>Цена обучения — <b>6$</b> (потребуются вложения):</p>
+      <ul style="margin: 1rem 0 1rem 1.5rem;">
+        <li style="margin-bottom: 0.5rem;">SCM ТУРКОВ (от $1500)</li>
+        <li style="margin-bottom: 0.5rem;">SCM ЗНАКОМСТВА</li>
+        <li style="margin-bottom: 0.5rem;">SCM КАЗИНО</li>
+        <li style="margin-bottom: 0.5rem;">SCM СЕРЫЙ</li>
+        <li style="margin-bottom: 0.5rem;">SCAM 1.0</li>
+        <li style="margin-bottom: 0.5rem;">SCM 2.0</li>
+        <li style="margin-bottom: 0.5rem;">SCM СОЛЕВЫХ</li>
+        <li style="margin-bottom: 0.5rem;">SCM АVИТО</li>
+        <li style="margin-bottom: 0.5rem;">AML ПРОВЕРК@</li>
+        <li style="margin-bottom: 0.5rem;">ГЕРМАНИЯ 2.0</li>
+        <li style="margin-bottom: 0.5rem;">ПОРТУГАЛИЯ / РУМЫНИЯ ОЛХ</li>
+        <li>ЭСКОРТ / КОНСУМ / ШАНТАЖ</li>
+      </ul>
+
+      <h4 style="color: var(--neon-purple); margin: 1.5rem 0 1rem;">Бесплатные (малый профит)</h4>
+
+      <div class="manual-btn" onclick="toggleManual('m1')">
+        <i class="fab fa-whatsapp"></i> Сдача WhatsApp
+      </div>
+      <div id="m1" class="manual-content">Сдача Вацап — это сдача своего номера, используемого в WhatsApp. После отстоя нужного времени — выплата.</div>
+
+      <div class="manual-btn" onclick="toggleManual('m2')">
+        <i class="fab fa-tiktok"></i> TikTok
+      </div>
+      <div id="m2" class="manual-content">Выкладываешь видео про Проект X, зарабатываешь просмотрами. Подробнее — у кураторов.</div>
+    </div>
+
     <!-- Кураторы -->
     <div id="curators" class="section">
+      <span class="close-btn" onclick="hideSection('curators')">&times;</span>
       <h3 style="color: var(--neon-purple); margin-bottom: 1.5rem;">НАШИ КУРАТОРЫ</h3>
       <a class="btn" href="https://t.me/Caspebet" target="_blank" style="margin-top: 1rem;">
         <i class="fab fa-telegram"></i> @Caspebet
@@ -305,6 +362,7 @@
 
     <!-- Анонимность -->
     <div id="anon" class="section">
+      <span class="close-btn" onclick="hideSection('anon')">&times;</span>
       <h3 style="color: var(--neon-cyan); margin-bottom: 1.5rem;">АНОНИМНОСТЬ</h3>
       <p>Мы используем передовые технологии для защиты ваших данных:</p>
       <ul style="margin-top: 1rem; padding-left: 1.5rem;">
@@ -344,7 +402,7 @@
       }, 600);
     });
     
-    // Показать/скрыть секции
+    // Показать секцию
     function showSection(id) {
       document.querySelectorAll('.section').forEach(sec => {
         sec.classList.remove('visible');
@@ -354,6 +412,17 @@
         top: document.getElementById(id).offsetTop - 80,
         behavior: 'smooth'
       });
+    }
+    
+    // Скрыть секцию
+    function hideSection(id) {
+      document.getElementById(id).classList.remove('visible');
+    }
+    
+    // Раскрывающиеся мануалы в "Ворках"
+    function toggleManual(id) {
+      const content = document.getElementById(id);
+      content.style.display = content.style.display === 'block' ? 'none' : 'block';
     }
     
     // Эффект частиц
