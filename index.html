@@ -3,17 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PROJECT X | ULTIMATE</title>
+  <title>PROJECT X | CYBERPUNK</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --neon-cyan: #0df;
       --neon-purple: #90f;
+      --neon-pink: #f0f;
       --dark-bg: #0a0a12;
       --darker-bg: #07070c;
-      --card-bg: rgba(15, 15, 25, 0.8);
+      --card-bg: rgba(15, 15, 25, 0.7);
       --text-primary: #fff;
       --text-secondary: #aaa;
+      --glow: 0 0 10px;
     }
 
     * {
@@ -21,21 +23,25 @@
       padding: 0;
       box-sizing: border-box;
       font-family: 'Rajdhani', 'Segoe UI', sans-serif;
+      user-select: none;
     }
 
     @font-face {
       font-family: 'Rajdhani';
-      src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+      src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&display=swap');
     }
 
     body {
       background: var(--dark-bg);
-      color: white;
+      color: var(--text-primary);
       min-height: 100vh;
-      padding: 20px;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(0, 221, 255, 0.1) 0%, transparent 25%),
+        radial-gradient(circle at 80% 70%, rgba(144, 0, 255, 0.1) 0%, transparent 25%);
     }
 
-    /* Preloader */
+    /* ========== PRELOADER ========== */
     #preloader {
       position: fixed;
       top: 0;
@@ -48,153 +54,309 @@
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.8s ease-out;
     }
 
     .loader-logo {
-      font-size: 3rem;
+      font-size: 4rem;
       font-weight: 700;
       background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      text-shadow: 
+        var(--glow) var(--neon-cyan),
+        0 0 20px var(--neon-purple);
+      animation: neon-flicker 2s infinite alternate;
+    }
+
+    @keyframes neon-flicker {
+      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+        text-shadow: 
+          var(--glow) var(--neon-cyan),
+          0 0 20px var(--neon-purple);
+      }
+      20%, 24%, 55% {
+        opacity: 0.8;
+        text-shadow: none;
+      }
     }
 
     .loader-bar {
-      width: 200px;
-      height: 3px;
+      width: 300px;
+      height: 4px;
       background: rgba(255, 255, 255, 0.1);
-      border-radius: 3px;
+      border-radius: 2px;
       overflow: hidden;
+      position: relative;
     }
 
     .loader-progress {
+      position: absolute;
+      top: 0;
+      left: 0;
       height: 100%;
       width: 0%;
       background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
-      transition: width 0.3s ease;
+      transition: width 0.4s ease;
+      box-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    #main-content {
+      opacity: 0;
+      transition: opacity 0.8s ease;
     }
 
     header {
       text-align: center;
-      margin-bottom: 30px;
+      padding: 3rem 0;
+      position: relative;
+      z-index: 10;
     }
 
     .logo {
-      font-size: 3rem;
-      font-weight: bold;
+      font-size: 4rem;
+      font-weight: 700;
       background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 0.5rem;
+      text-shadow: 
+        var(--glow) var(--neon-cyan),
+        0 0 20px var(--neon-purple);
+      animation: neon-flicker 2s infinite alternate;
     }
 
     .tagline {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--text-secondary);
+      font-weight: 300;
+      letter-spacing: 1px;
+      opacity: 0;
+      transform: translateY(20px);
     }
 
+    /* ========== BUTTONS ========== */
     .btn-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 15px;
-      margin-bottom: 20px;
+      gap: 1.5rem;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 10;
     }
 
     .btn {
-      display: inline-block;
-      padding: 14px 24px;
-      width: 220px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      width: 300px;
+      padding: 1.3rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #111;
       background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
       border: none;
-      border-radius: 8px;
-      color: #000;
-      font-size: 18px;
-      font-weight: 600;
-      text-align: center;
+      border-radius: 12px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+      box-shadow: 
+        0 0 15px rgba(0, 221, 255, 0.5),
+        0 0 30px rgba(144, 0, 255, 0.3);
+      z-index: 1;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255,255,255,0.3) 0%,
+        rgba(255,255,255,0) 60%
+      );
+      transform: rotate(30deg);
+      transition: all 0.6s ease;
+      z-index: -1;
     }
 
     .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 221, 255, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 
+        0 5px 20px rgba(0, 221, 255, 0.8),
+        0 0 40px rgba(144, 0, 255, 0.5);
     }
 
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:active {
+      transform: translateY(2px);
+    }
+
+    .btn i {
+      font-size: 1.4rem;
+    }
+
+    /* ========== SECTIONS ========== */
     .section {
       display: none;
       max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
+      margin: 2rem auto;
+      padding: 2.5rem;
       background: var(--card-bg);
-      border-radius: 10px;
-      animation: fadeIn 0.5s ease;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0, 221, 255, 0.2);
+      box-shadow: 
+        0 0 20px rgba(0, 221, 255, 0.2),
+        inset 0 0 10px rgba(0, 221, 255, 0.1);
+      position: relative;
+      z-index: 5;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .section.visible {
-      display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .close-btn {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      top: 20px;
+      right: 20px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 1.5rem;
-      cursor: pointer;
       color: var(--text-secondary);
-      transition: color 0.3s ease;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 50%;
     }
 
     .close-btn:hover {
       color: var(--neon-cyan);
+      transform: rotate(90deg);
+      text-shadow: 0 0 10px var(--neon-cyan);
+    }
+
+    .section h3 {
+      color: var(--neon-cyan);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0, 221, 255, 0.3);
+    }
+
+    /* ========== MANUAL BUTTONS ========== */
+    .manual-list {
+      margin: 2rem 0;
     }
 
     .manual-btn {
-      display: block;
-      padding: 12px 15px;
-      margin: 10px 0;
-      background: rgba(30, 30, 45, 0.7);
-      border: 1px solid rgba(0, 221, 255, 0.2);
-      border-radius: 8px;
-      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 1.8rem;
+      margin: 1rem 0;
+      background: rgba(30, 30, 45, 0.5);
+      border: 1px solid rgba(0, 221, 255, 0.3);
+      border-radius: 10px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.4s ease;
+      color: var(--text-primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .manual-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(0, 221, 255, 0.1),
+        transparent
+      );
+      transition: all 0.6s ease;
     }
 
     .manual-btn:hover {
       background: rgba(0, 221, 255, 0.1);
       border-color: var(--neon-cyan);
+      transform: translateX(10px);
+      box-shadow: 0 0 15px rgba(0, 221, 255, 0.2);
     }
 
-    .manual-content {
-      display: none;
-      padding: 10px;
-      margin-top: 5px;
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
+    .manual-btn:hover::before {
+      left: 100%;
     }
 
+    .manual-btn i {
+      font-size: 1.4rem;
+      margin-right: 1rem;
+      color: var(--neon-cyan);
+    }
+
+    .manual-btn::after {
+      content: '→';
+      font-size: 1.5rem;
+      color: var(--neon-cyan);
+      transition: all 0.3s ease;
+    }
+
+    .manual-btn:hover::after {
+      transform: translateX(5px);
+    }
+
+    /* ========== FOOTER ========== */
     footer {
       text-align: center;
-      margin-top: 40px;
+      padding: 3rem 2rem;
       color: var(--text-secondary);
+      font-size: 0.9rem;
+      position: relative;
+      z-index: 10;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
+    /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
       .logo {
-        font-size: 2rem;
+        font-size: 2.5rem;
       }
+      
       .btn {
-        width: 100%;
-      max-width: 280px;
+        width: 280px;
+        padding: 1.1rem;
+        font-size: 1.1rem;
+      }
+      
+      .section {
+        padding: 1.8rem;
+        margin: 1.5rem;
       }
     }
   </style>
@@ -212,105 +374,99 @@
   <div id="main-content">
     <header>
       <div class="logo">PROJECT X</div>
-      <div class="tagline">ИННОВАЦИОННЫЙ ЗАРАБОТОК</div>
+      <div class="tagline">КИБЕРПАНК ДОХОДЫ</div>
     </header>
 
     <div class="btn-container">
       <button class="btn" id="startBtn">
-        <i class="fas fa-rocket"></i> НАЧАТЬ
+        <i class="fas fa-power-off"></i> АКТИВИРОВАТЬ
       </button>
       <a class="btn" href="https://t.me/Caspebet" target="_blank">
-        <i class="fab fa-telegram"></i> ТЕЛЕГРАМ
+        <i class="fab fa-telegram"></i> КОНТАКТ
       </a>
     </div>
 
-    <!-- Menu Section -->
+    <!-- Menu -->
     <div id="menu" class="section">
       <span class="close-btn" onclick="hideSection('menu')">&times;</span>
-      <button class="btn" onclick="showSection('faq')">FAQ</button>
-      <button class="btn" onclick="showSection('manuals')">МАНУАЛЫ</button>
-      <button class="btn" onclick="showSection('works')">ВОРКИ</button>
-      <button class="btn" onclick="showSection('curators')">КУРАТОРЫ</button>
-      <button class="btn" onclick="showSection('anon')">АНОНИМНОСТЬ</button>
+      <button class="btn" onclick="showSection('faq')">
+        <i class="fas fa-question-circle"></i> FAQ
+      </button>
+      <button class="btn" onclick="showSection('manuals')">
+        <i class="fas fa-book"></i> МАНУАЛЫ
+      </button>
+      <button class="btn" onclick="showSection('works')">
+        <i class="fas fa-tasks"></i> ВОРКИ
+      </button>
+      <button class="btn" onclick="showSection('curators')">
+        <i class="fas fa-users"></i> КУРАТОРЫ
+      </button>
     </div>
 
-    <!-- FAQ Section -->
+    <!-- FAQ -->
     <div id="faq" class="section">
       <span class="close-btn" onclick="hideSection('faq')">&times;</span>
       <h3>ЧТО ТАКОЕ PROJECT X?</h3>
-      <p>Это платформа для заработка с проверенными методиками и профессиональной поддержкой.</p>
+      <p>Киберпанк-платформа для заработка с максимальной анонимностью и прозрачностью.</p>
     </div>
 
-    <!-- Manuals Section -->
+    <!-- Manuals -->
     <div id="manuals" class="section">
       <span class="close-btn" onclick="hideSection('manuals')">&times;</span>
       <h3>МАНУАЛЫ</h3>
-      <a href="https://telegra.ph/Manual-po-Kripte-02-24" target="_blank" class="manual-btn">
-        МАНУАЛ ПО КРИПТЕ
-      </a>
-      <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
-        ICLOUD
-      </a>
-      <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
-        ОБЩИЙ МАНУАЛ ЕВРОПА 2.00
-      </a>
-      <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
-        ПОЛНЫЙ МАНУАЛ 2.00
-      </a>
+      <div class="manual-list">
+        <a href="https://telegra.ph/Manual-po-Kripte-02-24" target="_blank" class="manual-btn">
+          <i class="fab fa-bitcoin"></i> КРИПТА
+        </a>
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+          <i class="fab fa-apple"></i> ICLOUD
+        </a>
+        <a href="https://telegra.ph/ICloud-04-04-2" target="_blank" class="manual-btn">
+          <i class="fas fa-globe-europe"></i> ЕВРОПА 2.0
+        </a>
+      </div>
     </div>
 
-    <!-- Works Section -->
+    <!-- Works -->
     <div id="works" class="section">
       <span class="close-btn" onclick="hideSection('works')">&times;</span>
       <h3>ВОРКИ</h3>
-      
-      <h4>Платные методы</h4>
-      <ul>
-        <li>SCM ТУРКОВ (от $1500)</li>
-        <li>SCM ЗНАКОМСТВА</li>
-        <li>SCM КАЗИНО</li>
-      </ul>
-      
-      <h4>Бесплатные методы</h4>
-      <div class="manual-btn" onclick="toggleManual('m1')">Сдача WhatsApp</div>
-      <div id="m1" class="manual-content">
-        Сдача номера WhatsApp для временного использования.
+      <div class="manual-btn" onclick="toggleManual('m1')">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </div>
+      <div id="m1" class="manual-content" style="display: none; padding: 1rem; margin-top: 0.5rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+        Сдача номера для временного использования
       </div>
       
-      <div class="manual-btn" onclick="toggleManual('m2')">TikTok</div>
-      <div id="m2" class="manual-content">
-        Заработок на просмотрах в TikTok.
+      <div class="manual-btn" onclick="toggleManual('m2')">
+        <i class="fab fa-tiktok"></i> TikTok
+      </div>
+      <div id="m2" class="manual-content" style="display: none; padding: 1rem; margin-top: 0.5rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+        Заработок на просмотрах
       </div>
     </div>
 
-    <!-- Curators Section -->
+    <!-- Curators -->
     <div id="curators" class="section">
       <span class="close-btn" onclick="hideSection('curators')">&times;</span>
       <h3>КУРАТОРЫ</h3>
-      <a class="btn" href="https://t.me/Caspebet" target="_blank">
+      <a class="btn" href="https://t.me/Caspebet" target="_blank" style="margin-top: 1rem;">
         <i class="fab fa-telegram"></i> @Caspebet
       </a>
     </div>
 
-    <!-- Anonymity Section -->
-    <div id="anon" class="section">
-      <span class="close-btn" onclick="hideSection('anon')">&times;</span>
-      <h3>АНОНИМНОСТЬ</h3>
-      <p>Мы гарантируем полную конфиденциальность ваших данных.</p>
-    </div>
-
     <footer>
-      <p>© PROJECT X 2024</p>
+      <p>© PROJECT X | CYBERPUNK EDITION</p>
     </footer>
   </div>
 
   <script>
     // Preloader
     window.addEventListener('load', function() {
-      // Simulate loading
       let progress = 0;
       const interval = setInterval(function() {
-        progress += 10;
+        progress += Math.random() * 15;
+        if (progress > 100) progress = 100;
         document.querySelector('.loader-progress').style.width = progress + '%';
         
         if (progress >= 100) {
@@ -319,6 +475,15 @@
           setTimeout(function() {
             document.getElementById('preloader').remove();
             document.getElementById('main-content').style.opacity = '1';
+            
+            // Animate tagline
+            anime({
+              targets: '.tagline',
+              opacity: 1,
+              translateY: 0,
+              duration: 1000,
+              easing: 'easeOutExpo'
+            });
           }, 500);
         }
       }, 200);
@@ -336,7 +501,7 @@
       if (section) {
         section.classList.add('visible');
         window.scrollTo({
-          top: section.offsetTop - 20,
+          top: section.offsetTop - 50,
           behavior: 'smooth'
         });
       }
@@ -354,24 +519,26 @@
       }
     }
 
-    // Start button handler
+    // Start button
     document.getElementById('startBtn').addEventListener('click', function() {
       // Button animation
-      this.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        this.style.transform = 'scale(1)';
-      }, 200);
+      anime({
+        targets: this,
+        scale: [1, 1.1, 1],
+        duration: 500,
+        easing: 'easeInOutSine'
+      });
       
-      // Show menu section
+      // Show menu
       showSection('menu');
     });
 
-    // Initialize - show menu if no errors
+    // Initialize
     setTimeout(() => {
       if (!document.getElementById('startBtn')) {
         console.error('Start button not found!');
       } else {
-        console.log('Project X initialized successfully!');
+        console.log('System initialized');
       }
     }, 1000);
   </script>
