@@ -2,193 +2,342 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Проект Х</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT X | Заработок</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&family=Oxanium:wght@400;600&display=swap">
   <style>
+    :root {
+      --bg-dark: #0a0a12;
+      --bg-card: #11111a;
+      --accent: #00ffcc;
+      --accent2: #0088ff;
+      --text: #e0e0e0;
+      --text-light: #a0a0a0;
+      --neon-shadow: 0 0 10px rgba(0, 255, 204, 0.7);
+    }
+
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Orbitron', sans-serif;
+      box-sizing: border-box;
     }
 
     body {
-      background: radial-gradient(circle at top, #0d0d1f, #000);
-      color: #00ccff;
-      overflow: hidden;
-      height: 100vh;
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Oxanium', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      overflow-x: hidden;
     }
 
-    .splash {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 999;
-      animation: fadeOut 3s ease-in-out forwards;
-      animation-delay: 2.5s;
-    }
-
-    .splash h1 {
-      font-size: 48px;
-      color: #00ccff;
-      margin-bottom: 20px;
-      letter-spacing: 4px;
-    }
-
-    .loader {
-      border: 3px solid #00ccff;
-      border-top: 3px solid transparent;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        visibility: hidden;
-      }
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-    }
-
-    .main-button {
-      padding: 20px 40px;
-      font-size: 24px;
-      background: transparent;
-      border: 2px solid #00ccff;
-      color: #00ccff;
-      cursor: pointer;
+    /* Шапка */
+    header {
+      text-align: center;
+      margin: 30px 0 40px;
       position: relative;
-      z-index: 1;
-      overflow: hidden;
-      transition: 0.3s;
     }
 
-    .main-button::before {
+    .logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: var(--neon-shadow);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      letter-spacing: 1px;
+    }
+
+    /* Кнопки */
+    .btn {
+      display: block;
+      width: 100%;
+      max-width: 280px;
+      margin: 15px auto;
+      padding: 14px 0;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #000;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(0, 255, 204, 0.5);
+    }
+
+    .btn::before {
       content: '';
       position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
       top: 0;
-      height: 100%;
-      width: 0;
-      background: #00ccff;
-      z-index: -1;
-      transition: 0.3s;
-    }
-
-    .main-button:hover::before {
+      left: -100%;
       width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+      z-index: -1;
     }
 
-    .main-button:hover {
-      color: #000;
+    .btn:hover::before {
+      left: 100%;
     }
 
-    .modal {
+    /* Секции */
+    .section {
       display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(0, 0, 0, 0.9);
-      border: 1px solid #00ccff;
-      padding: 30px;
-      z-index: 10;
-      border-radius: 10px;
-      box-shadow: 0 0 30px #00ccff;
+      margin: 25px auto;
+      max-width: 800px;
+      background: var(--bg-card);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.6s ease-out forwards;
     }
 
-    .modal h2 {
-      color: #00ccff;
-      text-align: center;
+    .section.visible {
+      display: block;
+    }
+
+    h2 {
+      font-family: 'Rajdhani', sans-serif;
+      color: var(--accent);
       margin-bottom: 20px;
+      font-size: 1.8rem;
+      text-align: center;
     }
 
-    .modal ul {
-      list-style: none;
+    h3 {
+      color: var(--accent);
+      margin: 20px 0 10px;
+      font-size: 1.3rem;
     }
 
-    .modal ul li {
-      margin: 10px 0;
+    /* Карточки мануалов */
+    .manuals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
     }
 
-    .modal ul li a {
-      color: #00ccff;
-      text-decoration: none;
-      font-size: 18px;
-      transition: 0.2s;
+    .manual-card {
+      background: linear-gradient(145deg, #1a1a24, #15151e);
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid #252535;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .modal ul li a:hover {
-      color: #fff;
+    .manual-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 150, 255, 0.1);
+      border-color: var(--accent);
     }
 
-    .overlay {
-      display: none;
-      position: fixed;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.6);
-      top: 0;
-      left: 0;
-      z-index: 5;
+    .manual-card h4 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      color: var(--accent);
+    }
+
+    .manual-card p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .price-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 600;
+      border-radius: 20px;
+      font-size: 0.8rem;
+    }
+
+    .free-tag {
+      background: #4CAF50;
+    }
+
+    /* Футер */
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      padding: 20px;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Анимации */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(0, 255, 204, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
+    }
+
+    /* Адаптив */
+    @media (max-width: 768px) {
+      .logo {
+        font-size: 2.5rem;
+      }
+      .manuals-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
+  <header>
+    <div class="logo">PROJECT X</div>
+    <div class="tagline">ИННОВАЦИОННЫЕ СХЕМЫ ЗАРАБОТКА</div>
+  </header>
 
-<div class="splash">
-  <h1>ПРОЕКТ Х</h1>
-  <div class="loader"></div>
-</div>
+  <a href="#menu" class="btn" onclick="showSection('menu')">НАЧАТЬ</a>
+  <a class="btn" href="https://t.me/Caspebet" target="_blank">ТЕЛЕГРАМ КУРАТОРА</a>
 
-<div class="container">
-  <button class="main-button" onclick="openMenu()">АКТИВИРОВАТЬ</button>
-</div>
+  <!-- Главное меню -->
+  <div id="menu" class="section">
+    <h2>ВЫБЕРИ РАЗДЕЛ</h2>
+    <button class="btn" onclick="showSection('faq')">О ПРОЕКТЕ</button>
+    <button class="btn" onclick="showSection('manuals')">МАНУАЛЫ</button>
+    <button class="btn" onclick="showSection('curators')">КУРАТОРЫ</button>
+    <button class="btn" onclick="showSection('works')">АКТУАЛЬНЫЕ ВОРКИ</button>
+    <button class="btn" onclick="showSection('anon')">АНОНИМНОСТЬ</button>
+  </div>
 
-<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+  <!-- FAQ -->
+  <div id="faq" class="section">
+    <h2>О ПРОЕКТЕ X</h2>
+    <p>PROJECT X — это закрытое сообщество профессионалов, где собраны проверенные схемы заработка в сети. Мы предлагаем:</p>
+    <ul style="margin: 15px 0; padding-left: 20px;">
+      <li>Эксклюзивные мануалы с гарантией окупаемости</li>
+      <li>Поддержку кураторов 24/7</li>
+      <li>Полную анонимность и безопасность</li>
+      <li>Актуальные ворки с ежедневными выплатами</li>
+    </ul>
+    <p>Начни зарабатывать от $500 уже в первую неделю после вступления.</p>
+  </div>
 
-<div class="modal" id="menu">
-  <h2>Меню</h2>
-  <ul>
-    <li><a href="#">📘 FAQ</a></li>
-    <li><a href="#">📂 Мануалы</a></li>
-    <li><a href="#">💼 Ворки</a></li>
-    <li><a href="#">👤 Кураторы</a></li>
-    <li><a href="#">🕶 Анонимность</a></li>
-  </ul>
-</div>
+  <!-- Мануалы -->
+  <div id="manuals" class="section">
+    <h2>ДОСТУПНЫЕ МАНУАЛЫ</h2>
+    
+    <h3>🔥 ПЛАТНЫЕ (ОКУПАЕМОСТЬ 90%)</h3>
+    <div class="manuals-grid">
+      <div class="manual-card">
+        <h4>SCM ТУРКОВ</h4>
+        <p>Доход: от $1500 в месяц</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="manual-card">
+        <h4>SCM КАЗИНО</h4>
+        <p>Без риска, стабильный доход</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="manual-card">
+        <h4>ГЕРМАНИЯ 2.0</h4>
+        <p>Работа с EU рынком</p>
+        <span class="price-tag">6$</span>
+      </div>
+    </div>
 
-<script>
-  function openMenu() {
-    document.getElementById('menu').style.display = 'block';
-    document.getElementById('overlay').style.display = 'block';
-  }
+    <h3 style="margin-top: 30px;">🎯 БЕСПЛАТНЫЕ (ДЛЯ НАЧИНАЮЩИХ)</h3>
+    <div class="manuals-grid">
+      <div class="manual-card">
+        <h4>СДАЧА WHATSAPP</h4>
+        <p>Пассивный доход без вложений</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+      <div class="manual-card">
+        <h4>TIKTOK ARBITRAGE</h4>
+        <p>Заработок на просмотрах</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+    </div>
+  </div>
 
-  function closeMenu() {
-    document.getElementById('menu').style.display = 'none';
-    document.getElementById('overlay').style.display = 'none';
-  }
-</script>
+  <!-- Кураторы -->
+  <div id="curators" class="section">
+    <h2>КОНТАКТЫ КУРАТОРОВ</h2>
+    <p>Для получения доступа к материалам и персональной консультации:</p>
+    <a class="btn" href="https://t.me/Caspebet" target="_blank" style="animation: pulse 2s infinite; margin-top: 25px;">
+      @CASPEBET (ОСНОВНОЙ КУРАТОР)
+    </a>
+    <p style="margin-top: 20px; font-size: 0.9rem; color: var(--text-light);">
+      Среднее время ответа: 5-15 минут
+    </p>
+  </div>
 
+  <!-- Ворки -->
+  <div id="works" class="section">
+    <h2>АКТУАЛЬНЫЕ ВОРКИ</h2>
+    <div class="manual-card">
+      <h4>🔒 Раздел в разработке</h4>
+      <p>Следи за обновлениями в Telegram-канале</p>
+    </div>
+  </div>
+
+  <!-- Анонимность -->
+  <div id="anon" class="section">
+    <h2>ВАША БЕЗОПАСНОСТЬ</h2>
+    <p>Мы гарантируем:</p>
+    <ul style="margin: 15px 0; padding-left: 20px;">
+      <li>Отсутствие логирования ваших действий</li>
+      <li>Шифрование всех данных</li>
+      <li>Работу через криптовалюты</li>
+      <li>Отсутствие KYC процедур</li>
+    </ul>
+    <p>Ваша анонимность — наш главный приоритет.</p>
+  </div>
+
+  <footer>
+    <p>© PROJECT X | 2024 | Все права защищены</p>
+    <p style="margin-top: 5px; font-size: 0.8rem;">Только для членов закрытого клуба</p>
+  </footer>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(sec => sec.classList.remove('visible'));
+      document.getElementById(id).classList.add('visible');
+      window.scrollTo({
+        top: document.getElementById(id).offsetTop - 50,
+        behavior: 'smooth'
+      });
+    }
+
+    // Автоматическое закрытие всех разделов при загрузке
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(sec => sec.classList.remove('visible'));
+    });
+  </script>
 </body>
 </html>
