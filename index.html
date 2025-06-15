@@ -35,6 +35,44 @@
         radial-gradient(circle at 80% 70%, rgba(0, 136, 255, 0.05) 0%, transparent 20%);
     }
 
+    /* Заставка */
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+      animation: fadeOut 1s ease-in-out 2s forwards;
+    }
+
+    #splash-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px rgba(0, 255, 204, 0.7);
+      animation: pulse 2s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.8; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
     /* Шапка */
     header {
       text-align: center;
@@ -120,6 +158,31 @@
       left: 100%;
     }
 
+    /* Кнопка закрытия */
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 30px;
+      height: 30px;
+      background: rgba(255, 0, 0, 0.3);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      color: white;
+      font-size: 1.2rem;
+      z-index: 10;
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 0, 0, 0.6);
+      transform: rotate(90deg);
+    }
+
     /* Секции */
     .section {
       display: none;
@@ -133,6 +196,7 @@
       -webkit-backdrop-filter: blur(8px);
       border: 1px solid rgba(255, 255, 255, 0.05);
       animation: fadeIn 0.6s ease-out forwards;
+      position: relative;
     }
 
     .section.visible {
@@ -254,12 +318,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.4); }
-      70% { box-shadow: 0 0 0 15px rgba(0, 255, 204, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
-    }
-
     /* Адаптив */
     @media (max-width: 768px) {
       .logo {
@@ -271,10 +329,18 @@
       .section {
         padding: 20px;
       }
+      #splash-logo {
+        font-size: 5rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Заставка -->
+  <div id="splash">
+    <div id="splash-logo">X</div>
+  </div>
+
   <header>
     <div class="logo">PROJECT X</div>
     <div class="tagline">ЗАКРЫТЫЙ КЛУБ ПРОФЕССИОНАЛОВ</div>
@@ -285,6 +351,7 @@
 
   <!-- Главное меню -->
   <div id="menu" class="section">
+    <button class="close-btn" onclick="hideAllSections()">×</button>
     <h2>ГЛАВНОЕ МЕНЮ</h2>
     <button class="btn" onclick="showSection('faq')">О ПРОЕКТЕ</button>
     <button class="btn" onclick="showSection('manuals')">МАНУАЛЫ</button>
@@ -295,6 +362,7 @@
 
   <!-- FAQ -->
   <div id="faq" class="section">
+    <button class="close-btn" onclick="hideAllSections()">×</button>
     <h2>О ПРОЕКТЕ X</h2>
     <p>PROJECT X — это эксклюзивное сообщество для избранных, где собраны самые актуальные и проверенные схемы заработка 2024 года.</p>
     
@@ -321,6 +389,7 @@
 
   <!-- Мануалы -->
   <div id="manuals" class="section">
+    <button class="close-btn" onclick="hideAllSections()">×</button>
     <h2>МАНУАЛЫ</h2>
     <p>Выберите мануал для изучения:</p>
     
@@ -349,19 +418,15 @@
 
   <!-- Ворки -->
   <div id="works" class="section">
+    <button class="close-btn" onclick="hideAllSections()">×</button>
     <h2>АКТУАЛЬНЫЕ ВОРКИ</h2>
     <p>Для получения доступа обращайтесь к кураторам:</p>
     
-    <h3>🔥 ПЛАТНЫЕ (ОКУПАЕМОСТЬ 90%)</h3>
+    <h3>🔥 ПЛАТНЫЕ (6$ ОБУЧЕНИЕ + ВЛОЖЕНИЯ)</h3>
     <div class="grid">
       <div class="card">
         <h4>SCM ТУРКОВ</h4>
-        <p>Доход: от $1500 в месяц</p>
-        <span class="price-tag">6$</span>
-      </div>
-      <div class="card">
-        <h4>SCM КАЗИНО</h4>
-        <p>Без риска, стабильный доход</p>
+        <p>Профит от 1500$</p>
         <span class="price-tag">6$</span>
       </div>
       <div class="card">
@@ -370,13 +435,58 @@
         <span class="price-tag">6$</span>
       </div>
       <div class="card">
+        <h4>SCM КАЗИНО</h4>
+        <p>Безрисковые стратегии</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>SCM СЕРЫЙ</h4>
+        <p>Универсальная схема</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>SCAM 1.0</h4>
+        <p>Проверенная методика</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
         <h4>SCM 2.0</h4>
-        <p>Обновленная универсальная схема</p>
+        <p>Обновленная версия</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>SCM СОЛЕВЫХ</h4>
+        <p>Эксклюзивный метод</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>SCM АVИТО</h4>
+        <p>Работа с маркетплейсами</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>AML ПРОВЕРК@</h4>
+        <p>Обход проверок</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>ГЕРМАНИЯ 2.0</h4>
+        <p>Европейский рынок</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>ПОРТУГАЛИЯ/РУМЫНИЯ</h4>
+        <p>Работа с ОЛХ</p>
+        <span class="price-tag">6$</span>
+      </div>
+      <div class="card">
+        <h4>ЭСКОРТ/КОНСУМ/ШАНТАЖ</h4>
+        <p>Премиум сегмент</p>
         <span class="price-tag">6$</span>
       </div>
     </div>
 
-    <h3 style="margin-top: 30px;">🎯 БЕСПЛАТНЫЕ (ДЛЯ НАЧИНАЮЩИХ)</h3>
+    <h3 style="margin-top: 30px;">🎯 БЕСПЛАТНЫЕ (ОБРАЩАТЬСЯ К КУРАТОРАМ)</h3>
     <div class="grid">
       <div class="card">
         <h4>СДАЧА WHATSAPP</h4>
@@ -384,19 +494,50 @@
         <span class="price-tag free-tag">FREE</span>
       </div>
       <div class="card">
-        <h4>TIKTOK ARBITRAGE</h4>
+        <h4>АРБИТРАЖ ТРАФИКА</h4>
+        <p>Заработок на потоке клиентов</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+      <div class="card">
+        <h4>УБТ</h4>
+        <p>Универсальный метод</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+      <div class="card">
+        <h4>ПЕРЕПРОДАЖА NFT</h4>
+        <p>Заработок на цифровых активах</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+      <div class="card">
+        <h4>СИГНЫ С НИКНЕЙМОМ</h4>
+        <p>Аналитика и прогнозирование</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+      <div class="card">
+        <h4>FUNPAY</h4>
+        <p>Заработок на играх</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+      <div class="card">
+        <h4>TIKTOK</h4>
         <p>Заработок на просмотрах</p>
+        <span class="price-tag free-tag">FREE</span>
+      </div>
+      <div class="card">
+        <h4>РЕФЕРАЛЬНАЯ СИСТЕМА</h4>
+        <p>С банком (уточнять у куратора)</p>
         <span class="price-tag free-tag">FREE</span>
       </div>
     </div>
 
     <p style="margin-top: 30px; text-align: center; color: var(--accent); font-weight: 600;">
-      Для покупки мануалов пишите кураторам в Telegram
+      Для получения доступа пишите кураторам в Telegram
     </p>
   </div>
 
   <!-- Кураторы -->
   <div id="curators" class="section">
+    <button class="close-btn" onclick="hideAllSections()">×</button>
     <h2>КОНТАКТЫ КУРАТОРОВ</h2>
     <p>Для получения доступа к материалам и персональной консультации:</p>
     <a class="btn" href="https://t.me/Caspebet" target="_blank" style="animation: pulse 2s infinite; margin-top: 30px;">
@@ -410,6 +551,7 @@
 
   <!-- Анонимность -->
   <div id="anon" class="section">
+    <button class="close-btn" onclick="hideAllSections()">×</button>
     <h2>ВАША БЕЗОПАСНОСТЬ</h2>
     <p>Мы гарантируем полную конфиденциальность:</p>
     
@@ -444,6 +586,11 @@
   </footer>
 
   <script>
+    // Заставка
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+    }, 3000);
+
     function showSection(id) {
       const sections = document.querySelectorAll('.section');
       sections.forEach(sec => sec.classList.remove('visible'));
@@ -452,6 +599,11 @@
         top: document.getElementById(id).offsetTop - 80,
         behavior: 'smooth'
       });
+    }
+
+    function hideAllSections() {
+      const sections = document.querySelectorAll('.section');
+      sections.forEach(sec => sec.classList.remove('visible'));
     }
 
     // Автоматическое закрытие всех разделов при загрузке
