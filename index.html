@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PROJECT X | Премиум доступ</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Oxanium:wght@400;600&display=swap">
+  <title>PROJECT X | VIP Клуб</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Exo+2:wght@400;600&display=swap">
   <style>
     :root {
       --bg-dark: #0a0a12;
@@ -13,11 +13,11 @@
       --accent2: #0088ff;
       --text: #e0e0e0;
       --text-light: #a0a0a0;
-      --neon-shadow: 0 0 15px rgba(0, 255, 204, 0.7);
-      --glow: 0 0 25px rgba(0, 255, 204, 0.5);
+      --neon-shadow: 0 0 20px rgba(0, 255, 204, 0.8);
+      --glow: 0 0 30px rgba(0, 255, 204, 0.6);
     }
 
-    /* Глобальные стили */
+    /* Глобальный сброс */
     * {
       margin: 0;
       padding: 0;
@@ -27,61 +27,103 @@
     body {
       background: var(--bg-dark);
       color: var(--text);
-      font-family: 'Oxanium', sans-serif;
-      line-height: 1.6;
+      font-family: 'Exo 2', sans-serif;
+      line-height: 1.7;
       overflow-x: hidden;
       min-height: 100vh;
-      position: relative;
     }
 
-    /* Анимированный фон */
-    .bg-grid {
+    /* Прелоадер */
+    #preloader {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
-        radial-gradient(circle at 20% 30%, rgba(0, 255, 204, 0.03) 0%, transparent 25%),
-        linear-gradient(to right, rgba(0, 136, 255, 0.05) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0, 136, 255, 0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: -1;
-      animation: gridScroll 120s linear infinite;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease;
     }
 
-    @keyframes gridScroll {
-      from { background-position: 0 0; }
-      to { background-position: 1000px 1000px; }
+    #preloader-logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8rem;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 30px var(--accent);
+      margin-bottom: 30px;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: logoIntro 2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
-    /* Контейнер */
+    @keyframes logoIntro {
+      0% { opacity: 0; transform: scale(0.5) rotate(-30deg); }
+      80% { opacity: 1; transform: scale(1.1) rotate(5deg); }
+      100% { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    #preloader-bar {
+      width: 300px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      animation: fadeIn 0.5s 0.5s forwards;
+    }
+
+    #preloader-progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 2s ease;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    /* Основной контент */
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 20px;
-      position: relative;
+      padding: 30px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: contentFadeIn 1s 3s forwards;
+    }
+
+    @keyframes contentFadeIn {
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Шапка */
     header {
       text-align: center;
-      margin: 40px 0;
+      margin: 50px 0;
       position: relative;
     }
 
     .logo {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 4.5rem;
-      font-weight: 700;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 5rem;
+      font-weight: 800;
       background: linear-gradient(90deg, var(--accent), var(--accent2));
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       text-shadow: var(--neon-shadow);
-      letter-spacing: 5px;
-      margin-bottom: 15px;
+      letter-spacing: 8px;
+      margin-bottom: 20px;
       position: relative;
       display: inline-block;
     }
@@ -92,49 +134,52 @@
       bottom: -15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 200px;
+      width: 250px;
       height: 3px;
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      filter: drop-shadow(0 0 10px var(--accent));
+      filter: drop-shadow(0 0 15px var(--accent));
     }
 
     .tagline {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--text-light);
-      letter-spacing: 2px;
-      margin-top: 20px;
+      letter-spacing: 3px;
+      margin-top: 25px;
       font-weight: 300;
+      text-transform: uppercase;
     }
 
-    /* Основные кнопки */
+    /* Кнопки */
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 40px 0;
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 100%;
-      max-width: 320px;
-      margin: 15px auto;
-      padding: 18px 25px;
+      max-width: 350px;
+      padding: 20px 30px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       border: none;
-      border-radius: 12px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1.2rem;
-      font-weight: 600;
+      border-radius: 15px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
       color: #000;
       cursor: pointer;
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
       z-index: 1;
-      text-align: center;
       text-decoration: none;
-      box-shadow: 0 5px 25px rgba(0, 255, 204, 0.3);
-    }
-
-    .btn:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 10px 30px rgba(0, 255, 204, 0.5);
+      box-shadow: 0 8px 30px rgba(0, 255, 204, 0.4);
+      transform-style: preserve-3d;
     }
 
     .btn::before {
@@ -146,83 +191,137 @@
       height: 100%;
       background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255, 255, 255, 0.2), 
+                rgba(255, 255, 255, 0.3), 
                 transparent);
       transition: 0.6s;
       z-index: -1;
+    }
+
+    .btn:hover {
+      transform: translateY(-8px) scale(1.05) rotateX(10deg);
+      box-shadow: 0 15px 40px rgba(0, 255, 204, 0.6);
     }
 
     .btn:hover::before {
       left: 100%;
     }
 
+    .btn-pulse {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: translateY(-8px) scale(1.05); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.6); }
+      70% { box-shadow: 0 0 0 20px rgba(0, 255, 204, 0); }
+      100% { transform: translateY(-8px) scale(1.05); box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); }
+    }
+
     /* Секции */
     .section {
       display: none;
-      margin: 40px auto;
-      background: rgba(17, 17, 26, 0.85);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      animation: fadeIn 0.6s ease-out forwards;
+      margin: 50px auto;
+      background: rgba(17, 17, 26, 0.9);
+      padding: 50px;
+      border-radius: 25px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      animation: sectionFadeIn 0.8s ease-out forwards;
       position: relative;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes sectionFadeIn {
+      from { opacity: 0; transform: translateY(30px) rotateX(15deg); }
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
     }
 
     .section.visible {
       display: block;
     }
 
+    /* Кнопка закрытия */
+    .close-btn {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 50, 50, 0.4);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      color: white;
+      font-size: 1.8rem;
+      z-index: 10;
+      backdrop-filter: blur(5px);
+      transform: translateZ(20px);
+    }
+
+    .close-btn:hover {
+      background: rgba(255, 50, 50, 0.7);
+      transform: rotate(90deg) scale(1.2) translateZ(20px);
+    }
+
     /* Заголовки */
     h2 {
-      font-family: 'Rajdhani', sans-serif;
+      font-family: 'Orbitron', sans-serif;
       color: var(--accent);
-      margin-bottom: 30px;
-      font-size: 2.2rem;
+      margin-bottom: 40px;
+      font-size: 2.5rem;
       text-align: center;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       text-shadow: var(--neon-shadow);
       position: relative;
+      transform: translateZ(30px);
     }
 
     h2::after {
       content: '';
       position: absolute;
-      bottom: -10px;
+      bottom: -15px;
       left: 50%;
       transform: translateX(-50%);
-      width: 100px;
-      height: 2px;
+      width: 150px;
+      height: 3px;
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      filter: drop-shadow(0 0 10px var(--accent));
     }
 
     h3 {
       color: var(--accent);
-      margin: 30px 0 20px;
-      font-size: 1.5rem;
-      font-family: 'Rajdhani', sans-serif;
-      letter-spacing: 1px;
+      margin: 35px 0 25px;
+      font-size: 1.8rem;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 2px;
+      transform: translateZ(20px);
     }
 
     /* Карточки */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 25px;
-      margin-top: 35px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+      perspective: 1000px;
     }
 
     .card {
       background: linear-gradient(145deg, #1a1a24, #15151e);
-      border-radius: 15px;
-      padding: 30px;
-      border: 1px solid rgba(0, 255, 204, 0.15);
-      transition: all 0.4s ease;
+      border-radius: 20px;
+      padding: 35px;
+      border: 1px solid rgba(0, 255, 204, 0.2);
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
       overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform-style: preserve-3d;
+      transform: translateZ(0);
     }
 
     .card::before {
@@ -233,91 +332,76 @@
       width: 100%;
       height: 100%;
       background: linear-gradient(135deg, 
-                rgba(0, 255, 204, 0.05), 
-                rgba(0, 136, 255, 0.05));
+                rgba(0, 255, 204, 0.08), 
+                rgba(0, 136, 255, 0.08));
       z-index: -1;
     }
 
     .card:hover {
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-15px) rotateX(5deg) translateZ(20px);
       box-shadow: var(--glow);
       border-color: var(--accent);
     }
 
     .card h4 {
-      font-size: 1.3rem;
-      margin-bottom: 15px;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
       color: var(--accent);
       display: flex;
       align-items: center;
-      font-family: 'Rajdhani', sans-serif;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+      transform: translateZ(30px);
     }
 
     .card h4::before {
       content: '➤';
-      margin-right: 12px;
+      margin-right: 15px;
       color: var(--accent2);
-      font-size: 1.1em;
+      font-size: 1.3em;
+      transform: translateZ(10px);
     }
 
     .card p {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--text-light);
-      margin-bottom: 20px;
-      line-height: 1.6;
+      margin-bottom: 25px;
+      line-height: 1.7;
+      transform: translateZ(10px);
     }
 
     .price-tag {
       display: inline-block;
-      padding: 6px 15px;
+      padding: 8px 18px;
       background: var(--accent);
       color: #000;
-      font-weight: 700;
-      border-radius: 20px;
-      font-size: 0.95rem;
-      margin-top: 15px;
-      box-shadow: 0 3px 10px rgba(0, 255, 204, 0.3);
+      font-weight: 800;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      margin-top: 20px;
+      box-shadow: 0 5px 15px rgba(0, 255, 204, 0.4);
+      transform: translateZ(20px);
+      transition: all 0.3s ease;
+    }
+
+    .price-tag:hover {
+      transform: translateZ(20px) scale(1.1);
     }
 
     .free-tag {
       background: #4CAF50;
-      box-shadow: 0 3px 10px rgba(76, 175, 80, 0.3);
-    }
-
-    /* Кнопка закрытия */
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: rgba(255, 50, 50, 0.3);
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      z-index: 10;
-      backdrop-filter: blur(5px);
-    }
-
-    .close-btn:hover {
-      background: rgba(255, 50, 50, 0.6);
-      transform: rotate(90deg) scale(1.1);
+      box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
     }
 
     /* Футер */
     footer {
       text-align: center;
-      margin-top: 80px;
-      padding: 30px;
+      margin-top: 100px;
+      padding: 40px;
       color: var(--text-light);
-      font-size: 1rem;
+      font-size: 1.1rem;
       position: relative;
+      transform-style: preserve-3d;
     }
 
     footer::before {
@@ -326,44 +410,57 @@
       top: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 250px;
-      height: 1px;
+      width: 300px;
+      height: 2px;
       background: linear-gradient(90deg, 
                 transparent, 
                 var(--accent), 
                 transparent);
-    }
-
-    /* Анимации */
-    @keyframes fadeIn {
-      from { 
-        opacity: 0; 
-        transform: translateY(30px) scale(0.95); 
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
-      }
-    }
-
-    @keyframes pulse {
-      0% { 
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(0, 255, 204, 0.4); 
-      }
-      70% { 
-        box-shadow: 0 0 0 15px rgba(0, 255, 204, 0); 
-      }
-      100% { 
-        transform: scale(1.05);
-        box-shadow: 0 0 0 0 rgba(0, 255, 204, 0); 
-      }
+      filter: drop-shadow(0 0 10px var(--accent));
     }
 
     /* Адаптив */
-    @media (max-width: 768px) {
+    @media (max-width: 992px) {
       .logo {
-        font-size: 3rem;
+        font-size: 4rem;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+      
+      .logo {
+        font-size: 3.5rem;
+        letter-spacing: 5px;
+      }
+      
+      .section {
+        padding: 35px;
+      }
+      
+      .btn {
+        padding: 18px;
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 576px) {
+      #preloader-logo {
+        font-size: 5rem;
+      }
+      
+      .logo {
+        font-size: 2.8rem;
+      }
+      
+      h2 {
+        font-size: 2rem;
       }
       
       .grid {
@@ -373,43 +470,27 @@
       .section {
         padding: 25px;
       }
-      
-      .btn {
-        padding: 16px;
-        font-size: 1.1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .logo {
-        font-size: 2.5rem;
-      }
-      
-      .section {
-        padding: 20px;
-      }
-      
-      h2 {
-        font-size: 1.8rem;
-      }
     }
   </style>
 </head>
 <body>
-  <!-- Анимированный фон -->
-  <div class="bg-grid"></div>
+  <!-- Прелоадер -->
+  <div id="preloader">
+    <div id="preloader-logo">X</div>
+    <div id="preloader-bar">
+      <div id="preloader-progress"></div>
+    </div>
+  </div>
 
   <div class="container">
     <header>
       <div class="logo">PROJECT X</div>
-      <div class="tagline">ПРЕМИУМ ДОСТУП К ЭКСКЛЮЗИВНЫМ МЕТОДИКАМ</div>
+      <div class="tagline">VIP ДОСТУП К ЭКСКЛЮЗИВУ</div>
     </header>
 
     <div class="btn-container">
       <a href="#menu" class="btn" onclick="showSection('menu')">НАЧАТЬ</a>
-      <a class="btn" href="https://t.me/Caspebet" target="_blank" style="animation: pulse 2s infinite;">
-        ТЕЛЕГРАМ КУРАТОРА
-      </a>
+      <a class="btn btn-pulse" href="https://t.me/Caspebet" target="_blank">ТЕЛЕГРАМ КУРАТОРА</a>
     </div>
 
     <!-- Главное меню -->
@@ -426,10 +507,11 @@
     <!-- FAQ -->
     <div id="faq" class="section">
       <button class="close-btn" onclick="hideAllSections()">×</button>
-      <h2>О ПРОЕКТЕ X</h2>
-      <p>PROJECT X — это закрытое сообщество профессионалов, где собраны эксклюзивные методики заработка, недоступные в открытых источниках.</p>
+      <h2>PROJECT X</h2>
+      <p style="text-align: center; font-size: 1.2rem; margin-bottom: 40px; transform: translateZ(10px);">
+        Закрытое сообщество профессионалов с эксклюзивными методиками 2024
+      </p>
       
-      <h3>ПОЧЕМУ МЫ?</h3>
       <div class="grid">
         <div class="card">
           <h4>ГАРАНТИИ</h4>
@@ -450,7 +532,7 @@
     <div id="manuals" class="section">
       <button class="close-btn" onclick="hideAllSections()">×</button>
       <h2>ЭКСКЛЮЗИВНЫЕ МАНУАЛЫ</h2>
-      <p>Доступ к материалам после верификации:</p>
+      <p style="text-align: center; transform: translateZ(10px);">Доступ после верификации через куратора</p>
       
       <div class="grid">
         <a href="https://telegra.ph/Manual-po-Kripte-02-24" target="_blank" class="card">
@@ -483,7 +565,7 @@
     <div id="works" class="section">
       <button class="close-btn" onclick="hideAllSections()">×</button>
       <h2>АКТУАЛЬНЫЕ ВОРКИ</h2>
-      <p>Для доступа обращайтесь к кураторам:</p>
+      <p style="text-align: center; transform: translateZ(10px);">Для доступа обращайтесь к кураторам</p>
       
       <h3>🔥 ПЛАТНЫЕ (6$ ОБУЧЕНИЕ + ВЛОЖЕНИЯ)</h3>
       <div class="grid">
@@ -519,7 +601,7 @@
         </div>
       </div>
 
-      <h3 style="margin-top: 40px;">🎯 БЕСПЛАТНЫЕ</h3>
+      <h3>🎯 БЕСПЛАТНЫЕ</h3>
       <div class="grid">
         <div class="card">
           <h4>СДАЧА WHATSAPP</h4>
@@ -548,14 +630,14 @@
     <div id="curators" class="section">
       <button class="close-btn" onclick="hideAllSections()">×</button>
       <h2>КОНТАКТЫ КУРАТОРОВ</h2>
-      <p>Для верификации и доступа к материалам:</p>
-      <a class="btn" href="https://t.me/Caspebet" target="_blank" style="animation: pulse 2s infinite; margin: 30px auto;">
+      <p style="text-align: center; transform: translateZ(10px);">Для верификации и доступа к материалам</p>
+      <a class="btn btn-pulse" href="https://t.me/Caspebet" target="_blank" style="margin: 40px auto; display: block; max-width: 400px;">
         @CASPEBET (ОСНОВНОЙ КУРАТОР)
       </a>
       <div class="card" style="max-width: 500px; margin: 0 auto;">
         <h4>ЧАСЫ РАБОТЫ</h4>
         <p>Поддержка 24/7, среднее время ответа — 7 минут</p>
-        <p style="color: var(--accent); margin-top: 10px;">Пишите сразу по делу</p>
+        <p style="color: var(--accent); margin-top: 15px;">Пишите сразу по делу</p>
       </div>
     </div>
 
@@ -581,20 +663,39 @@
 
     <footer>
       <p>© PROJECT X | 2024 | ЗАКРЫТЫЙ КЛУБ</p>
-      <p style="margin-top: 15px; font-size: 0.9rem; color: rgba(160, 160, 160, 0.6);">
+      <p style="margin-top: 20px; font-size: 0.9rem; color: rgba(160, 160, 160, 0.6);">
         Все права защищены. Несанкционированное распространение преследуется.
       </p>
     </footer>
   </div>
 
   <script>
-    // Показать раздел
+    // Прелоадер
+    window.addEventListener('load', function() {
+      // Анимация прогресс-бара
+      document.getElementById('preloader-progress').style.width = '100%';
+      
+      // Скрываем прелоадер через 3 секунды
+      setTimeout(function() {
+        document.getElementById('preloader').style.opacity = '0';
+        setTimeout(function() {
+          document.getElementById('preloader').style.display = 'none';
+        }, 1000);
+      }, 3000);
+    });
+
+    // Показать раздел с анимацией
     function showSection(id) {
       const sections = document.querySelectorAll('.section');
-      sections.forEach(sec => sec.classList.remove('visible'));
-      document.getElementById(id).classList.add('visible');
+      sections.forEach(sec => {
+        sec.classList.remove('visible');
+      });
+      
+      const section = document.getElementById(id);
+      section.classList.add('visible');
+      
       window.scrollTo({
-        top: document.getElementById(id).offsetTop - 100,
+        top: section.offsetTop - 120,
         behavior: 'smooth'
       });
     }
@@ -602,30 +703,49 @@
     // Скрыть все разделы
     function hideAllSections() {
       const sections = document.querySelectorAll('.section');
-      sections.forEach(sec => sec.classList.remove('visible'));
+      sections.forEach(sec => {
+        sec.classList.remove('visible');
+      });
     }
 
-    // Автоматическое закрытие при загрузке
-    document.addEventListener('DOMContentLoaded', () => {
-      hideAllSections();
-      
-      // Анимация карточек
-      setTimeout(() => {
-        const cards = document.querySelectorAll('.card');
-        cards.forEach((card, i) => {
-          card.style.opacity = '0';
-          card.style.transform = 'translateY(20px)';
-          card.style.animation = `fadeIn 0.5s ease-out ${i * 0.1}s forwards`;
-        });
-      }, 500);
+    // 3D эффект для карточек при наведении мыши
+    document.addEventListener('mousemove', function(e) {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const angleX = (y - centerY) / 20;
+        const angleY = (centerX - x) / 20;
+        
+        card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) translateZ(20px)`;
+      });
     });
 
-    // Параллакс для фона
-    document.addEventListener('mousemove', (e) => {
-      const x = e.clientX / window.innerWidth;
-      const y = e.clientY / window.innerHeight;
-      document.querySelector('.bg-grid').style.transform = 
-        `translate(${x * 20}px, ${y * 20}px)`;
+    // Возвращаем карточки в исходное положение
+    document.addEventListener('mouseout', function(e) {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        if(!card.contains(e.relatedTarget)) {
+          card.style.transform = 'translateZ(0)';
+        }
+      });
+    });
+
+    // Инициализация
+    document.addEventListener('DOMContentLoaded', function() {
+      // Анимация появления карточек
+      setTimeout(function() {
+        const cards = document.querySelectorAll('.card');
+        cards.forEach((card, index) => {
+          setTimeout(function() {
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0) rotateX(0)';
+          }, index * 100);
+        });
+      }, 3500);
     });
   </script>
 </body>
